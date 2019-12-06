@@ -1,8 +1,13 @@
 import os
 import api.analyze
+from api.ip import ipAnalysis
+from lib.data import config
 from core.web import web_pcap_analyze
-dir=os.environ.get(os.getcwd())
-# print (api.ip.ipAnalysis.get_city('95.169.17.220'))
-# print (api.ip.ipAnalysis.get_city('95.169.17.220',language='zh-CN',location=True))
-# print (api.analyze.analyze_pcap('files/pcaps/thinkphp_5.x_rce_success.pcap'))
-web_pcap_analyze('files/pcaps/cve_2017_7985_success.pcap',language="en",location=True)
+
+def check_env():
+    dir=os.environ.get(os.getcwd())
+    config['ip'] = ipAnalysis.get_local_ip()
+result = api.analyze.analyze_suricata("files/suricata/eve.json",data="ip2")
+print (result)
+if __name__ == "__main__":
+    check_env()
