@@ -7,7 +7,7 @@ Mario 流量分析框架
 ```python
 python3 Mario.py
 ```
-- web模式（无后端）：
+- web模式（无前端）：
 ```python
 python3 Mario.py web
 ```
