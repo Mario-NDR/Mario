@@ -28,7 +28,9 @@ api.analyze.analyze_suricata("files/suricata/eve.json",data="ip")
 状态码：
 2000 ：流量包上传成功
 2001 ：流量包格式错误
-- 流量包解析模块（http://127.0.0.1:5000/pcap?filename=CVE-2019-17147success.pcapng）
+- 流量包解析模块（http://127.0.0.1:5000/pcap）
 使用 POST 方式传递需要解析的流量包的名称
 状态码：
 2002 ： 流量包不存在
+- 威胁情报地图模块 （http://127.0.0.1:5000/map）
+- 攻击流量（ip）显示模块（http://127.0.0.1:5000/ip）
