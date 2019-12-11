@@ -21,3 +21,14 @@ api.analyze.analyze_pcap('files/pcaps/thinkphp_5.x_rce_success.pcap')
 web_pcap_analyze('files/pcaps/cve_2017_7985_success.pcap',language="en",location=True)
 - 通过 suricata 告警信息分析  
 api.analyze.analyze_suricata("files/suricata/eve.json",data="ip")
+
+## 前端接口文档
+- 流量包上传模块 （http://127.0.0.1:5000/upload）
+使用 POST 方式上传流量包 （pcap，pcapng）
+状态码：
+2000 ：流量包上传成功
+2001 ：流量包格式错误
+- 流量包解析模块（http://127.0.0.1:5000/pcap?filename=CVE-2019-17147success.pcapng）
+使用 POST 方式传递需要解析的流量包的名称
+状态码：
+2002 ： 流量包不存在

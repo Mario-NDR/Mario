@@ -7,6 +7,7 @@ import traceback
 
 def analyze_pcap(pcap_path):
     pcap_data = sniff(offline=pcap_path)
+    result = {}
     analyze_result = []
     for i in range(len(pcap_data)):
         try:
@@ -18,13 +19,15 @@ def analyze_pcap(pcap_path):
             analyze_result.append(pcap_result)
         except:
             pass
-    return analyze_result
+    result['data'] = analyze_result
+    return result
 
 
 def analyze_suricata(eve_json, data="ip",language = "en"):
     eve_file = open(eve_json, "r")
     eve_lines = eve_file.readlines()
-    eve_result = []
+    eve_result = {}
+    result = []
     if data == "ip":
         for eve_line in eve_lines:
             eve_info = {}
@@ -44,7 +47,7 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src,language) 
-                    eve_result.append(eve_info)
+                    result.append(eve_info)
             except:
                 pass
     elif data == "city":
@@ -66,7 +69,7 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src,language) 
-                    eve_result.append(eve_info)
+                    result.append(eve_info)
             except:
                 pass
     elif data == "xy" :
@@ -88,7 +91,8 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src,language) 
-                    eve_result.append(eve_info)
+                    result.append(eve_info)
             except:
                 pass
-    return eve_result
+    eve_result['data'] = result
+    return json.dumps(eve_result)
