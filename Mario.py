@@ -14,7 +14,7 @@ def start():
     if get_mod() == "python":
         results = api.analyze.analyze_suricata(
             "files/suricata/eve.json", data="xy", language="en")
-        print (results)
+        print(results)
     elif get_mod() == "web":
         webserver()
 

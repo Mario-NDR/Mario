@@ -23,7 +23,7 @@ def analyze_pcap(pcap_path):
     return result
 
 
-def analyze_suricata(eve_json, data="ip",language = "en"):
+def analyze_suricata(eve_json, data="ip", language="en"):
     eve_file = open(eve_json, "r")
     eve_lines = eve_file.readlines()
     eve_result = {}
@@ -46,7 +46,7 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                     eve_info["action"] = action
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
-                        eve_info["dest"] = ipAnalysis.get_city(src,language) 
+                        eve_info["dest"] = ipAnalysis.get_city(src, language)
                     result.append(eve_info)
             except:
                 pass
@@ -61,18 +61,18 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                 alert_message = eve_line["alert"]["signature"]
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
-                    eve_info["src"] = ipAnalysis.get_city(src,language)
-                    eve_info["dest"] = ipAnalysis.get_city(dest,language)
+                    eve_info["src"] = ipAnalysis.get_city(src, language)
+                    eve_info["dest"] = ipAnalysis.get_city(dest, language)
                     eve_info["event_type"] = event_type
                     eve_info["alert_message"] = alert_message
                     eve_info["action"] = action
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
-                        eve_info["dest"] = ipAnalysis.get_city(src,language) 
+                        eve_info["dest"] = ipAnalysis.get_city(src, language)
                     result.append(eve_info)
             except:
                 pass
-    elif data == "xy" :
+    elif data == "xy":
         for eve_line in eve_lines:
             eve_info = {}
             eve_line = json.loads(eve_line)
@@ -83,14 +83,16 @@ def analyze_suricata(eve_json, data="ip",language = "en"):
                 alert_message = eve_line["alert"]["signature"]
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
-                    eve_info["src"] = ipAnalysis.get_city(src,language,location=True)
-                    eve_info["dest"] = ipAnalysis.get_city(dest,language,location=True)
+                    eve_info["src"] = ipAnalysis.get_city(
+                        src, language, location=True)
+                    eve_info["dest"] = ipAnalysis.get_city(
+                        dest, language, location=True)
                     eve_info["event_type"] = event_type
                     eve_info["alert_message"] = alert_message
                     eve_info["action"] = action
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
-                        eve_info["dest"] = ipAnalysis.get_city(src,language) 
+                        eve_info["dest"] = ipAnalysis.get_city(src, language)
                     result.append(eve_info)
             except:
                 pass
