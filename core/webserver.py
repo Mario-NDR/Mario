@@ -1,17 +1,21 @@
 import time
 import api.web
 import os
-from flask import Flask,request,redirect,url_for
+from flask import Flask, request, redirect, url_for
+
+
 def webserver():
     app = Flask(__name__)
     @app.route('/map')
     def map():
         result = api.web.map()
         return result
+
     @app.route('/ip')
     def ip():
         result = api.web.ip()
         return result
+
     @app.route('/upload', methods=['GET', 'POST'])
     def upload_file():
         if request.method == 'POST':
@@ -28,10 +32,10 @@ def webserver():
                 <input type=submit value=Upload>
             </form>
             '''
-    @app.route('/pcap',methods=['POST'])
+
+    @app.route('/pcap', methods=['POST'])
     def analyze_pcap():
         filename = request.form.get('filename')
         result = api.web.analyze_pcap(filename)
         return result
-    app.debug = True
-    app.run()
+    app.run(host='0.0.0.0', debug=True)
