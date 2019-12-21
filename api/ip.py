@@ -11,9 +11,7 @@ class ipAnalysis(object):
         try:
             response_data = GeoipDatabase.city(ip)
         except geoip2.errors.AddressNotFoundError:
-            # ip = re.findall(r"\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b",requests.get("http://myip.ipip.net").text)
-            # config['ip'] = ip
-            ip = "58.132.182.78"
+            ip = config['ip'][0]
             response_data = GeoipDatabase.city(ip)
         if location:
             try:
