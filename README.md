@@ -34,3 +34,10 @@ api.analyze.analyze_suricata("files/suricata/eve.json",data="ip")
 2002 ： 流量包不存在
 - 威胁情报地图模块 （http://127.0.0.1:5000/map）
 - 攻击流量（ip）显示模块（http://127.0.0.1:5000/ip）
+## 整体展示：
+```bash
+docker build -t mario .
+docker run -it -p 9955:9955 -p 5000:5000 -d mario
+```
+访问：
+http://127.0.0.1:9955/app/map

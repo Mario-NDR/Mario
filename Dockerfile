@@ -9,7 +9,8 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh && \
     bash nodesource_setup.sh && \
     apt-get install -y nodejs && \
     git clone https://github.com/co0ontty/design_UI.git && \
-    echo "cd /design_UI && npm install && npm start" > /etc/startui.sh && \
+    cd /design_UI && npm install && \
+    echo "cd /design_UI && npm start" > /etc/startui.sh && \
     echo "nohup /etc/startmario.sh & \n sh /etc/startui.sh" > /etc/start.sh && \
     chmod +x /etc/startmario.sh /etc/startui.sh /etc/start.sh
 CMD [ "sh","-c","/etc/start.sh" ]
