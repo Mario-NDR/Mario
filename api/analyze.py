@@ -3,6 +3,7 @@ from api.ip import ipAnalysis
 import time
 import json
 import traceback
+import random
 
 
 def analyze_pcap(pcap_path):
@@ -44,6 +45,8 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                     eve_info["event_type"] = event_type
                     eve_info["alert_message"] = alert_message
                     eve_info["action"] = action
+                    eve_info["src_count"] = random.randint(0,30)
+                    eve_info["dest_count"] = random.randint(0,30)
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src, language)
@@ -66,6 +69,8 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                     eve_info["event_type"] = event_type
                     eve_info["alert_message"] = alert_message
                     eve_info["action"] = action
+                    eve_info["src_count"] = random.randint(0,30)
+                    eve_info["dest_count"] = random.randint(0,30)
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src, language)
@@ -90,6 +95,8 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                     eve_info["event_type"] = event_type
                     eve_info["alert_message"] = alert_message
                     eve_info["action"] = action
+                    eve_info["src_count"] = random.randint(0,30)
+                    eve_info["dest_count"] = random.randint(0,30)
                     if "DONE" in eve_info["alert_message"]:
                         eve_info["src"] = eve_info["dest"]
                         eve_info["dest"] = ipAnalysis.get_city(src, language)
