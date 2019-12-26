@@ -40,6 +40,7 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                 alert_message = eve_line["alert"]["signature"]
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
+                    eve_info["time"] = eve_line["timestamp"]
                     eve_info["src"] = src
                     eve_info["dest"] = dest
                     eve_info["event_type"] = event_type
@@ -64,6 +65,7 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                 alert_message = eve_line["alert"]["signature"]
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
+                    eve_info["time"] = eve_line["timestamp"]
                     eve_info["src"] = ipAnalysis.get_city(src, language)
                     eve_info["dest"] = ipAnalysis.get_city(dest, language)
                     eve_info["event_type"] = event_type
@@ -88,6 +90,7 @@ def analyze_suricata(eve_json, data="ip", language="en"):
                 alert_message = eve_line["alert"]["signature"]
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
+                    eve_info["time"] = eve_line["timestamp"]
                     eve_info["src"] = ipAnalysis.get_city(
                         src, language, location=True)
                     eve_info["dest"] = ipAnalysis.get_city(

@@ -1,11 +1,14 @@
 import random
-evefile = open('./files/suricata/eve.json','a')
+evefile = open('../suricata/eve.json','a')
+msg_file = open("./alertmsg.txt","r")
+msg_list = msg_file.readlines()
 for num in range(0,300):
     lines = '''{"timestamp":"2019-08-13T06:00:35.755666+0000","flow_id":2193797656297611,"pcap_cnt":6153,"event_type":"alert","src_ip":"192.168.1.231","src_port":60398,"dest_ip":"95.169.17.220","dest_port":8080,"proto":"TCP","tx_id":0,"alert":{"action":"allowed","gid":1,"signature_id":30000059,"rev":1,"signature":"Apache Struts2(S2_008) RCE","category":"","severity":3},"http":{"hostname":"95.169.17.220","http_port":8080,"url":"\/\/S2-008\/devmode.action?debug=command&expression=(%23_memberAccess%5B%22allowStaticMethodAccess%22%5D%3Dtrue%2C%23foo%3Dnew%20java.lang.Boolean%28%22false%22%29%20%2C%23context%5B%22xwork.MethodAccessor.denyMethodExecution%22%5D%3D%23foo%2C%40java.lang.Runtime%40getRuntime%28%29.exec%28%22whoami%22%29)","http_user_agent":"Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/13.0 Safari\/605.1.15","http_content_type":"text\/plain","http_method":"GET","protocol":"HTTP\/1.1","status":200,"length":30},"app_proto":"http","flow":{"pkts_toserver":4,"pkts_toclient":3,"bytes_toserver":987,"bytes_toclient":379,"start":"2019-08-13T06:00:35.344203+0000"}}'''
     srcip = '{}.{}.{}.{}'.format(random.randint(1,255),random.randint(1,255),random.randint(1,255),random.randint(1,255))
     destip = '{}.{}.{}.{}'.format(random.randint(1,255),random.randint(1,255),random.randint(1,255),random.randint(1,255))
     time = '{}:{}:{}'.format(random.randint(10,24),random.randint(10,60),random.randint(10,60))
-    # lines = lines.replace("192.168.1.231",srcip).replace("95.169.17.220",destip).replace("06:00:35",time).replace("60398",str(random.randint(100,5000))).replace("8080",str(random.randint(100,5000))).replace("2193797656297611",str(random.randint(1000000000000000,1333333333333333)))+"\n"
-    lines = lines.replace("192.168.1.231",srcip).replace("95.169.17.220",destip).replace("06:00:35",time).replace("60398",str(random.randint(100,5000))).replace("8080",str(random.randint(100,5000))).replace("2193797656297611",str(random.randint(1000000000000000,1333333333333333)))+"\n"
+    msg_alert = random.choice(msg_list).replace("\n","")
+    lines = lines.replace("Apache Struts2(S2_008) RCE",msg_alert).replace("192.168.1.231",srcip).replace("95.169.17.220",destip).replace("06:00:35",time).replace("60398",str(random.randint(100,5000))).replace("8080",str(random.randint(100,5000))).replace("2193797656297611",str(random.randint(1000000000000000,1333333333333333)))+"\n"
     evefile.write(lines)
 evefile.close()
+msg_file.close()

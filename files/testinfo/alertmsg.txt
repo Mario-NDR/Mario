@@ -1,0 +1,127 @@
+GitStack Arbitrary PHP upload RCE (CVE-2018-5955)
+Wordpress <= 4.9.6 Any file deletion (CVE-2018-20714)
+ATTACK [PTsecurity] phpmyadmin 4.8.1 Remote File Inclusion Vulnerability (CVE-2018-12613)
+ATTACK [PTsecurity] Dlink RCE (CVE-2019-16920)
+ATTACK [PTsecurity] Cisco RV320 Command Injection Retrieval(CVE-2019-1652)
+ATTACK [PTsecurity] JBoss JMXInvokerServlet RCE
+ATTACK [PTsecurity] Confluence <6.14.2,6.13.3,6.12.3 Unauthorized RCE (CVE-2019-3396)
+ATTACK [PTsecurity] Confluence <6.14.2,6.13.3,6.12.3 Unauthorized RCE (CVE-2019-3396)
+ATTACK [PTsecurity] Oracle Weblogic file upload RCE (CVE-2019-2618)
+ATTACK [PTsecurity] Oracle Weblogic file upload RCE (CVE-2019-2618)
+ATTACK [PTsecurity] Spring AMQP <1.7.4, 1.6.11, 1.5.7 Java Object Deserialization RCE (CVE-2017-8045)
+ATTACK [PTsecurity] Cisco RV320 Unauthenticated Configuration Export(CVE-2019-1653)
+ATTACK [PTsecurity] Cisco RV320 Unauthenticated Configuration Export(CVE-2019-1653)
+Apache struts2 RCE (CVE-2018-11776)
+ATTACK [PTsecurity] Drupal <= Durpal 8.6.6  RCE (CVE-2019-6339)
+ATTACK [PTsecurity] Drupal <= Durpal 8.6.6  RCE (CVE-2019-6339)
+ATTACK [PTsecurity] Drupal <= Durpal 8.6.6  RCE (CVE-2019-6339)
+ATTACK [PTsecurity] Discuz x3.4 Server Side Request Forgery
+ATTACK [PTsecurity] Redis Unauthenticated Code Execution successful
+ATTACK [PTsecurity] Redis Unauthenticated Code Execution attack
+ATTACK [PTsecurity] Redis Unauthenticated Code Execution successful
+ATTACK [PTsecurity] Redis Unauthenticated Code Execution attack
+ATTACK [PTsecurity] Gitlab URLImport Server-Side Request Forgery
+ATTACK [PTsecurity] Ecology OA sql injection
+ATTACK [PTsecurity] MS Exchange 2010-2019 Possible privilege escalation (CVE-2018-8581)
+thinkcmf_file_contains
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2018-2628)
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2018-2628)
+ATTACK [PTsecurity] Weblogic Arbitrary File Upload (CVE-2018-2894)
+ATTACK [PTsecurity] Weblogic Arbitrary File Upload (CVE-2018-2894)
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2018-2893)
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2018-2893)
+ATTACK [PTsecurity] Wordpress <=4.6 RCE through lostpassword form (CVE-2016-10033)
+ATTACK [PTsecurity] Wordpress <=4.6 RCE through lostpassword form (CVE-2016-10033)
+ATTACK [PTsecurity] Oracle Weblogic _async deserialization RCE Attempt (CVE-2019-2725)
+ATTACK [PTsecurity] Oracle Weblogic _async deserialization RCE Attempt (CVE-2019-2725)
+ATTACK [PTsecurity] Discuz 7.2 Cross Site Scripting By Search
+ATTACK [PTsecurity] Arbitrary PHP RCE in Drupal 8 < 8.5.11,8.6.10 (CVE-2019-6340)
+ATTACK [PTsecurity] Arbitrary PHP RCE in Drupal 8 < 8.5.11,8.6.10 (CVE-2019-6340)
+Kibana < 6.6.0 RCE
+ATTACK [PTsecurity] Joomla 3.4.6 Remote Code Execution
+Adobe ColdFusion Deserialization RCE (CVE-2017-11283, CVE-2017-11284)
+Adobe ColdFusion Deserialization RCE (CVE-2017-11283, CVE-2017-11284)
+Apache Struts2(S2-016) RCE
+ATTACK [PTsecurity] WordPress Remote Code Execution (CVE-2019-6977)
+ATTACK [PTsecurity] WordPress Remote Code Execution (CVE-2019-6977)
+ATTACK [PTsecurity] WordPress Remote Code Execution (CVE-2019-6977)
+ATTACK [PTsecurity] ThinkPHP5 5.0.23 Remote Code Execution Vulnerability
+ATTACK [PTsecurity] ThinkPHP5 5.0.23 Remote Code Execution Vulnerability
+ATTACK [PTsecurity] Jenkins sandbox bypassing RCE (CVE-2019-1003000/1/2)
+ATTACK [PTsecurity] Jenkins sandbox bypassing RCE (CVE-2019-1003000/1/2)
+Hinet Gpon RCE 
+Hinet Gpon RCE 
+Hinet Gpon RCE 
+Hinet Gpon RCE 
+ThinkPHP5 5.0,5.1 RCE
+ATTACK [PTsecurity] Discuz!X 3.4 Any File Deletion
+ATTACK [PTsecurity] Discuz!X 3.4 Any File Deletion
+ATTACK [PTsecurity] File Content Disclosure on Rails
+ATTACK [PTsecurity] Drupalgeddon2 <7.5.9 <8.4.8 <8.5.3 RCE (CVE-2018-7602)
+ATTACK [PTsecurity] Drupalgeddon2 <7.5.9 <8.4.8 <8.5.3 RCE (CVE-2018-7602)
+ATTACK [PTsecurity] MikroTik Firewall & NAT Bypass (CVE-2019-3924)
+PhootCMS XSS 
+PhootCMS XSS 
+ATTACK [PTsecurity] Oracle WebLogic wls-wsat RCE (CVE-2017-10271)
+ATTACK [PTsecurity]  FastJson =< 1.2.47 RCE through Deserialize
+ATTACK [PTsecurity] Apache Tika 1.15-1.17 Header Command Injection (CVE-2018-1335)
+ATTACK [PTsecurity] Apache Tika 1.15-1.17 Header Command Injection (CVE-2018-1335)
+ATTACK [PTsecurity] MS Edge WScript Command Injection RCE (CVE-2018-8495)
+ATTACK [PTsecurity] weblogic xml injection (CVE-2019-2648)
+ATTACK [PTsecurity] weblogic xml injection (CVE-2019-2650)
+ATTACK [PTsecurity] weblogic xml injection (CVE-2019-2647)
+ATTACK [PTsecurity] weblogic xml injection (CVE-2019-2649)
+ATTACK [PTsecurity] Successful Mikrotik <6.41.3 <6.42rc27 RCE (CVE-2018-7445)
+ATTACK [PTsecurity] ShellCode Upload Mikrotik <6.41.3 <6.42rc27 RCE (CVE-2018-7445)
+ATTACK [PTsecurity] Mikrotik <6.41.3 <6.42rc27 RCE Attempt (CVE-2018-7445)
+WordPress REST API Information disclosure (CVE-2017-5487)
+WordPress REST API content injection vulnerabilities (CNVD-2017-00818)
+WordPress REST API Information disclosure 
+WordPress REST API content injection vulnerabilities (CNVD-2017-00818)
+ATTACK [PTsecurity] Discuz 7.x/6.x Remote Code Execute By Global Variable
+Apache Struts2(S2-008) RCE
+dlink Information leakage (CVE-2019-17511)
+dlink Information leakage (CVE-2019-17511)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] PHP Remote Code Execution (CVE-2019-11043)
+ATTACK [PTsecurity] Joomla Simple RSS Feed Reader mod_jw_srfr 3.6.0 Modules Open Redirecte
+ATTACK [PTsecurity] Joomla Simple RSS Feed Reader mod_jw_srfr 3.6.0 Modules Open Redirecte
+ATTACK [PTsecurity] Kibana < 6.4.3 <5.6.13 Arbitrary File Inclusion/Disclosure/RCE attempt (CVE-2018-17245)
+Apache Tomcat RCE on Windows (CVE-2019-0232)
+ATTACK [PTsecurity] Adobe ColdFusion Unrestricted File Upload Vulnerability (CVE-2009-2265)
+ATTACK [PTsecurity] Harbor enables privilege escalation(CVE-2019-16097)
+ATTACK [PTsecurity] Harbor enables privilege escalation(CVE-2019-16097)
+ATTACK [PTsecurity] Discuz! X3.x Cross Site Scripting In The Body Of Article
+Nagios XI 5.5.10: XSS to RCE
+ATTACK [PTsecurity] Directory traversal vulnerability in the D-Link router web interface (CVE-2018-10822)
+ATTACK [PTsecurity] Cisco UCS Director authentication command injection (CVE-2019-1936)
+ATTACK [PTsecurity] JBoss 4.x JBossMQ JMS RCE (CVE-2017-7504)
+ATTACK [PTsecurity]Couchdb <1.7.0 The remote command execution (CVE-2017-12636)
+ATTACK [PTsecurity]Couchdb <1.7.0 The remote command execution (CVE-2017-12636)
+ATTACK [PTsecurity]Couchdb <1.7.0 The remote command execution (CVE-2017-12636)
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2019-2729)
+ATTACK [PTsecurity] Oracle Weblogic deserialization RCE (CVE-2019-2729)
+ATTACK [PTsecurity] Adobe ColdFusion Unrestricted File Upload Vulnerability (CVE-2018-15961)
+ATTACK [PTsecurity] Mikrotik <6.42 Password disclosure path traversal (CVE-2018-14847)
+PhootCMS XSS 
+PhootCMS XSS 
+ATTACK [PTsecurity] Cisco UCS Director authentication bypass (CVE-2019-1937)
+ATTACK [PTsecurity] Cisco UCS Director authentication bypass (CVE-2019-1937)
+ATTACK [PTsecurity] Apache Struts < 2.3.32 < 2.5.10.1 RCE through Jakarta Multipart parser Attempt
+Apache Struts2(S2-012 or S2-001 or s2-013 or CVE-2017-9791) RCE
+ATTACK [PTsecurity] Apache Solr RCE(CVE-2019-0193)
+ATTACK [PTsecurity] Discuz!ML V3.X Code Injection
+ATTACK [PTsecurity] Apache Portals Pluto 3.0.0 RCE (CVE-2018-1306)
+ATTACK [PTsecurity] JBoss 5.x/6.x Deserialization RCE (CVE-2017-12149)
+ATTACK [PTsecurity] Drupalgeddon2 <8.3.9 <8.4.6 <8.5.1 RCE through registration form (CVE-2018-7600)
+ATTACK [PTsecurity] Drupalgeddon2 <8.3.9 <8.4.6 <8.5.1 RCE through registration form (CVE-2018-7600)
+ATTACK [PTsecurity] Possible Bluekeep RDP exploit CVE-2019-0708
+ATTACK [PTsecurity] Possible Bluekeep RDP exploit CVE-2019-0708
+Apache Solr Deserialization RCE
+Apache Solr Deserialization RCE
+GitStack Arbitrary PHP upload RCE (CVE-2018-5955)
