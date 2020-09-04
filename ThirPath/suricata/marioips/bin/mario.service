@@ -1,0 +1,11 @@
+[Unit]
+Description=mario ips
+After=syslog.target
+
+[Service]
+Type=forking
+ExecStart=/opt/marioips/bin/startips.sh
+ExecStop=/opt/marioips/bin/stopips.sh
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target

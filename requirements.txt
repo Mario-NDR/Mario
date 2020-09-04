@@ -1,0 +1,10 @@
+psutil
+pytz
+requests
+pygeoip
+geoip2
+flask
+pymongo
+scapy
+uwsgi
+colorlog

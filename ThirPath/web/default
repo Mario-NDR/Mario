@@ -1,0 +1,37 @@
+server {
+    listen 5000;
+    location / {
+      include uwsgi_params;
+      uwsgi_pass 127.0.0.1:8000;
+    }
+}
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /var/www/html/dist/;
+        server_name _;
+        location / {
+        location ~* \.(ico|gif|jpg|png|js|css)$ {
+          root /var/www/html/dist/;
+          expires 7d;
+          access_log off;
+        }
+        location ~ /api/ {
+        	proxy_pass  http://127.0.0.1:5000;
+    		}
+                try_files $uri /index.html;
+        }
+        gzip on;
+        gzip_buffers 16 8k;
+        gzip_comp_level 6;
+        gzip_min_length 256;
+        gzip_proxied any;
+        gzip_types
+        text/xml application/xml application/atom+xml application/rss+xml application/xhtml+xml image/svg+xml
+        text/javascript application/javascript application/x-javascript
+        text/x-json application/json application/x-web-app-manifest+json
+        text/css text/plain text/x-component
+        font/opentype font/ttf application/x-font-ttf application/vnd.ms-fontobject
+        image/x-icon;
+        gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+}

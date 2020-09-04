@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+    mario:
+        build: .
+        network_mode: "host"
+        restart: always
+    mongodb:
+        image: mongo
+        network_mode: "host"
+        restart: always
+        environment: 
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example

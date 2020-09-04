@@ -1,0 +1,12 @@
+version: "3.3"
+services:
+    mongodb:
+        image: mongo
+        restart: always
+        ports: 
+        - "27017:27017"
+        volumes:
+            - ./mariodb/:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
