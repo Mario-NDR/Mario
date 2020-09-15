@@ -4,7 +4,7 @@ import re
 from lib.data import src_ip
 def generate_by_ip(ip):
     if ip not in src_ip:
-        original_rule = 'drop ip src_ip any -> dest_ip any (msg:"联防-自学习 src_ip -> dest_ip"; sid:sid_num; classtype:system-call-detect; )\n'
+        original_rule = 'alert ip src_ip any -> dest_ip any (msg:"联防-自学习 src_ip -> dest_ip"; sid:sid_num; classtype:system-call-detect; )\n'
         src_defense = original_rule.replace("src_ip",ip).replace("dest_ip","any")
         dest_defense = original_rule.replace("dest_ip",ip).replace("src_ip","any")
         with open("./ThirPath/suricata/marioips/rules/local.rules",'r') as original_rules_file:
