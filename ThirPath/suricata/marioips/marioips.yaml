@@ -156,8 +156,8 @@ outputs:
 
   # alert output for use with Barnyard2
   - unified2-alert:
-      enabled: no
-      filename: unified2.alert
+      enabled: yes
+      filename: detail.alert
 
       # File size limit.  Can be specified in kb, mb, gb.  Just a number
       # is parsed as bytes.
