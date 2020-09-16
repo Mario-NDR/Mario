@@ -110,6 +110,7 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                     eve_info["alert_message"] = alert_message
                     eve_info["category"] = category
                     eve_info["action"] = action
+                    eve_info["payload"] = payload
                     try:
                         src_ip[eve_info["src"]["ip"]] += 1
                     except:
@@ -173,6 +174,7 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                     eve_info["alert_message"] = alert_message
                     eve_info["category"] = category
                     eve_info["action"] = action
+                    eve_info["payload"] = payload
                     try:
                         src_ip[eve_info["src"]["ip"]] += 1
                     except:
