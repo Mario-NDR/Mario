@@ -83,17 +83,18 @@ outputs:
       filename: eve.json
       types:
         - alert:
-            # payload: yes             # enable dumping payload in Base64
+            payload: yes             # enable dumping payload in Base64
             # payload-buffer-size: 4kb # max size of payload buffer to output in eve-log
-            # payload-printable: yes   # enable dumping payload in printable (lossy) format
+            payload-printable: yes   # enable dumping payload in printable (lossy) format
             packet: yes              # enable dumping of packet (without stream segments)
             http: yes                # enable dumping of http fields
-            tls: yes                 # enable dumping of tls fields
+            tls: no                 # enable dumping of tls fields
             ssh: yes                 # enable dumping of ssh fields
-            smtp: yes                # enable dumping of smtp fields
-            dnp3: yes                # enable dumping of DNP3 fields
-            tagged-packets: yes
+            smtp: no                # enable dumping of smtp fields
+            dnp3: no                # enable dumping of DNP3 fields
+            tagged-packets: no
             http-body: yes
+            http-body-printable: yes
             xff:
               enabled: no
               # Two operation modes are available, "extra-data" and "overwrite".

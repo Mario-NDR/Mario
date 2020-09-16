@@ -56,7 +56,8 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                         eve_info["src"]["ip"] = src
                     else:
                         if "联防-自学习" not in alert_message:
-                            generate_by_ip(src)
+                            # generate_by_ip(src)
+                            print("蜜罐模式联防暂时取消")
                         try:
                             eve_info["src"] = ipAnalysis.get_city(
                                 src, language, location=True)
@@ -141,7 +142,8 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                         print("内网威胁{}".format(src))
                     else:
                         if "联防-自学习" not in alert_message:
-                            generate_by_ip(src)
+                            # generate_by_ip(src)
+                            print("蜜罐模式联防暂时取消")
                     eve_info["dest"] = {}
                     eve_info["dest"]["ip"] = dest
                     if proto == "UDP":
