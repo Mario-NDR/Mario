@@ -35,6 +35,10 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                     category = eve_line["alert"]["category"]
                 except:
                     category = "None"
+                try:
+                    payload = eve_line["payload_printable"]
+                except:
+                    payload = "None"
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
                     eve_info["time"] = eve_line["timestamp"]
@@ -133,6 +137,10 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                     category = eve_line["alert"]["category"]
                 except:
                     category = "None"
+                try:
+                    payload = eve_line["payload_printable"]
+                except:
+                    payload = "None"
                 action = eve_line["alert"]["action"]
                 if event_type == "alert":
                     eve_info["time"] = eve_line["timestamp"]
