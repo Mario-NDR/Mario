@@ -12,7 +12,7 @@
 vars:
   # more specifc is better for alert accuracy and performance
   address-groups:
-    HOME_NET: "[127.0.0.1,47.97.251.76,140.82.43.144,149.28.189.70,149.28.151.103,45.77.213.250,108.61.177.29,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,255.255.255.255/32,203.0.113.0/24,198.51.100.0/24,198.18.0.0/15,192.0.2.0/24,192.0.0.0/24,169.254.0.0/16,127.0.0.0/8,100.64.0.0/10,0.0.0.0/8]"
+    HOME_NET: "[34.64.197.155,127.0.0.1,47.97.251.76,140.82.43.144,149.28.189.70,149.28.151.103,45.77.213.250,108.61.177.29,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,255.255.255.255/32,203.0.113.0/24,198.51.100.0/24,198.18.0.0/15,192.0.2.0/24,192.0.0.0/24,169.254.0.0/16,127.0.0.0/8,100.64.0.0/10,0.0.0.0/8]"
     #HOME_NET: "[192.168.0.0/16]"
     #HOME_NET: "[10.0.0.0/8]"
     #HOME_NET: "[172.16.0.0/12]"
@@ -62,7 +62,7 @@ default-log-dir: /opt/marioips/log/
 
 # global stats configuration
 stats:
-  enabled: yes
+  enabled: no
   # The interval field (in seconds) controls at what interval
   # the loggers are invoked.
   interval: 8
@@ -131,7 +131,7 @@ outputs:
         #    alerts: yes      # log alerts that caused drops
         #    flows: all       # start or all: 'start' logs only a single drop
         #                     # per flow direction. All logs each dropped pkt.
-        - smtp:
+        # - smtp:
             #extended: yes # enable this for extended logging information
             # this includes: bcc, message-id, subject, x_mailer, user-agent
             # custom fields logging from the list:
@@ -146,18 +146,18 @@ outputs:
 
         - ssh
         - stats:
-            totals: yes       # stats for all threads merged together
+            totals: no       # stats for all threads merged together
             threads: no       # per thread stats
             deltas: no        # include delta values
         # bi-directional flows
-        - flow
+        # - flow
         # uni-directional flows
         #- netflow
         #- dnp3
 
   # alert output for use with Barnyard2
   - unified2-alert:
-      enabled: yes
+      enabled: no
       filename: detail.alert
 
       # File size limit.  Can be specified in kb, mb, gb.  Just a number
