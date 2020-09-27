@@ -25,6 +25,7 @@ if [ ! -n "$1" ] ;then
             mkdir /opt/marioips/log/
             mkdir /opt/marioips/log/post_error/
             mkdir /opt/marioips/log/post_success/
+            mkdir /opt/marioips/log/pcap_log/
             rm -rf marioips.tar.gz
             systemctl enable mario
             systemctl enable mariosent

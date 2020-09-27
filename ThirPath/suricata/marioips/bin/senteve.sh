@@ -11,11 +11,10 @@ while true;do
 	fi
 	service mario stop
 	mv /opt/marioips/log/eve.json /opt/marioips/log/$newfile
-	mkdir /opt/marioips/log/$newpcap_file
-	mv /opt/marioips/log/marioips.pcap.* /opt/marioips/log/$newpcap_file
-	if [ $(ls /opt/marioips/log/ |grep pcap | wc -l) -ge 100 ];
+	mv /opt/marioips/log/marioips.pcap.* /opt/marioips/log/pcap_log/
+	if [ $(ls /opt/marioips/log/pcap_log/ |grep pcap | wc -l) -ge 100 ];
 	then
-		rm -rf $(ls /opt/marioips/log/ |grep pcap | sort -n | sed -n '1p')
+		rm -rf $(ls /opt/marioips/log/pcap_log/ |grep pcap | sort -n | sed -n '1p')
 	fi
 	echo `date '+%Y-%m-%d %H:%M:%S'` "backup eve.json to $newfile"
 	check_results=`curl -F "clientfile=@/opt/marioips/log/$newfile" -H "Accept: application/json" http://remoteadd:5000/api/evefile`
