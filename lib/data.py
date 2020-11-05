@@ -7,6 +7,7 @@ classtype = {
     'attempted-dos': 'DOS攻击',
     'attempted-admin': '暴力破解',
     'web-application-activity': 'WEB攻击',
+    'web-application-attack': 'WEB攻击',
     'system-call-detect': '威胁情报'
 }
 clean_status={}
