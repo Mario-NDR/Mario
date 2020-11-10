@@ -77,7 +77,10 @@ def webserver():
             if query != None:
                 allrules['rules'] = api.web.get_allrules(server, query)
             else:
-                allrules['rules'] = api.web.get_allrules(server)
+                try:
+                    allrules['rules'] = api.web.get_allrules(server)
+                except Exception as e:
+                    print("webserver.py set_rules:",e)
             return jsonify(allrules)
 
     @app.route('/api/rules/del', methods=['POST', 'DELETE'])
