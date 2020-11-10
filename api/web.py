@@ -289,6 +289,7 @@ def show_wavy(begintime,endtime):
     wavy_result['wavy_date']['木马活动'] = [0]*len(days)
     wavy_result['wavy_date']['网络扫描'] = [0]*len(days)
     wavy_result['wavy_date']['威胁情报'] = [0]*len(days)
+    wavy_result['wavy_date']['暴力破解'] = [0]*len(days)
     wavy_result['wavy_date']['其他类型'] = [0]*len(days)
     wavy_result['time'] = days
     for eve_line in eve_lines:
@@ -297,22 +298,47 @@ def show_wavy(begintime,endtime):
         date_list_index = days.index(format_date)
         if eve_line["alert"]["category"] == "Executable code was detected":
             wavy_result['wavy_date']['恶意代码'][date_list_index] += 1
-        else:
-            wavy_result['wavy_date']['恶意代码'][date_list_index] += 0
+            continue
         if eve_line["alert"]["category"] == "A Network Trojan was detected":
             wavy_result['wavy_date']['木马活动'][date_list_index] += 1
-        else:
-            wavy_result['wavy_date']['木马活动'][date_list_index] += 0
+            continue
         if eve_line["alert"]["category"] == "Detection of a Network Scan":
             wavy_result['wavy_date']['网络扫描'][date_list_index] += 1
-        else:
-            wavy_result['wavy_date']['网络扫描'][date_list_index] += 0
+            continue
         if eve_line["alert"]["category"] == "A system call was detected":
             wavy_result['wavy_date']['威胁情报'][date_list_index] += 1
-        else:
-            wavy_result['wavy_date']['威胁情报'][date_list_index] += 0
-        if eve_line["alert"]["category"] != "Detection of a Network Scan" and eve_line["alert"]["category"] != "A Network Trojan was detected" and eve_line["alert"]["category"] != "Executable code was detected" and eve_line["alert"]["category"] != "A system call was detected":
-            wavy_result['wavy_date']['其他类型'][date_list_index] += 1
-        else:
-            wavy_result['wavy_date']['其他类型'][date_list_index] += 0
+            continue
+        if eve_line["alert"]["category"] == "Attempted User Privilege Gain":
+            wavy_result['wavy_date']['暴力破解'][date_list_index] += 1
+            continue
+        wavy_result['wavy_date']['其他类型'][date_list_index] += 1
     return wavy_result
+    # for eve_line in eve_lines:
+    #     date = datetime.datetime.strptime(eve_line["timestamp"],"%Y-%m-%dT%H:%M:%S.%f%z").astimezone(datetime.timezone(datetime.timedelta(hours=8)))
+    #     format_date = datetime.datetime.strftime(date,"%Y-%m-%d")
+    #     date_list_index = days.index(format_date)
+    #     if eve_line["alert"]["category"] == "Executable code was detected":
+    #         wavy_result['wavy_date']['恶意代码'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['恶意代码'][date_list_index] += 0
+    #     if eve_line["alert"]["category"] == "A Network Trojan was detected":
+    #         wavy_result['wavy_date']['木马活动'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['木马活动'][date_list_index] += 0
+    #     if eve_line["alert"]["category"] == "Detection of a Network Scan":
+    #         wavy_result['wavy_date']['网络扫描'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['网络扫描'][date_list_index] += 0
+    #     if eve_line["alert"]["category"] == "A system call was detected":
+    #         wavy_result['wavy_date']['威胁情报'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['威胁情报'][date_list_index] += 0
+    #     if eve_line["alert"]["category"] == "Attempted User Privilege Gain":
+    #         wavy_result['wavy_date']['暴力破解'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['暴力破解'][date_list_index] += 0
+    #     if eve_line["alert"]["category"] != "Detection of a Network Scan" and eve_line["alert"]["category"] != "A Network Trojan was detected" and eve_line["alert"]["category"] != "Executable code was detected" and eve_line["alert"]["category"] != "A system call was detected":
+    #         wavy_result['wavy_date']['其他类型'][date_list_index] += 1
+    #     else:
+    #         wavy_result['wavy_date']['其他类型'][date_list_index] += 0
+    # return wavy_result
