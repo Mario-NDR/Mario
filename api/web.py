@@ -58,8 +58,11 @@ def get_allrules(server, query=" "):
                 rule_info['class_type'] = classtype[re.findall(
                     r'classtype:(.*?);', originalrule, re.S)[0]]
             except:
-                rule_info['class_type'] = re.findall(
-                    r'classtype:(.*?);', originalrule, re.S)[0]
+                try:
+                    rule_info['class_type'] = re.findall(
+                        r'classtype:(.*?);', originalrule, re.S)[0]
+                except:
+                    rule_info['class_type'] = "Undefined"
             allrules.append(rule_info)
     originalrules_file.close()
     return allrules
