@@ -18,22 +18,22 @@ def webserver():
         result = api.web.map(begintime=begintime, endtime=endtime)
         return jsonify(result)
 
-    @app.route('/api/upload', methods=['GET', 'POST'])
-    def upload_file():
-        if request.method == 'POST':
-            file = request.files['file']
-            result = api.web.upload_pcap(file)
-            return result
-        elif request.method == "GET":
-            return '''
-            <!doctype html>
-            <title>Upload new File</title>
-            <h1>Upload new File</h1>
-            <form action="" method=post enctype=multipart/form-data>
-            <p><input type=file name=file>
-                <input type=submit value=Upload>
-            </form>
-            '''
+    # @app.route('/api/upload', methods=['GET', 'POST'])
+    # def upload_file():
+    #     if request.method == 'POST':
+    #         file = request.files['file']
+    #         result = api.web.upload_pcap(file)
+    #         return result
+    #     elif request.method == "GET":
+    #         return '''
+    #         <!doctype html>
+    #         <title>Upload new File</title>
+    #         <h1>Upload new File</h1>
+    #         <form action="" method=post enctype=multipart/form-data>
+    #         <p><input type=file name=file>
+    #             <input type=submit value=Upload>
+    #         </form>
+    #         '''
 
     @app.route('/api/evefile', methods=['GET', 'POST'])
     def upload_evefile():
@@ -100,19 +100,19 @@ def webserver():
             api.web.change_rules(change_id, change_type)
             return "{} changed to type {}".format(change_id, change_type)
 
-    @app.route('/api/pcap', methods=['POST'])
-    def analyze_pcap():
-        filename = request.form.get('filename')
-        result = api.web.analyze_pcap(filename)
-        return result
+    # @app.route('/api/pcap', methods=['POST'])
+    # def analyze_pcap():
+    #     filename = request.form.get('filename')
+    #     result = api.web.analyze_pcap(filename)
+    #     return result
 
-    @app.route('/api/demo', methods=['POST'])
-    def demo_information():
-        num = request.form.get('demonum')
-        generate_demo_information(int(num))
-        result = {}
-        result['newdatenum'] = num
-        return jsonify(result)
+    # @app.route('/api/demo', methods=['POST'])
+    # def demo_information():
+    #     num = request.form.get('demonum')
+    #     generate_demo_information(int(num))
+    #     result = {}
+    #     result['newdatenum'] = num
+    #     return jsonify(result)
 
     @app.route('/api/vulsearch', methods=['POST'])
     def vul_search():
