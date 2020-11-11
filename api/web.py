@@ -289,7 +289,7 @@ def show_wavy(begintime,endtime):
     wavy_result['wavy_date']['木马活动'] = [0]*len(days)
     wavy_result['wavy_date']['网络扫描'] = [0]*len(days)
     wavy_result['wavy_date']['威胁情报'] = [0]*len(days)
-    wavy_result['wavy_date']['暴力破解'] = [0]*len(days)
+    wavy_result['wavy_date']['权限尝试'] = [0]*len(days)
     wavy_result['wavy_date']['其他类型'] = [0]*len(days)
     wavy_result['time'] = days
     for eve_line in eve_lines:
@@ -309,7 +309,7 @@ def show_wavy(begintime,endtime):
             wavy_result['wavy_date']['威胁情报'][date_list_index] += 1
             continue
         if eve_line["alert"]["category"] == "Attempted User Privilege Gain" or eve_line["alert"]["category"] == "Attempted Administrator Privilege Gain":
-            wavy_result['wavy_date']['暴力破解'][date_list_index] += 1
+            wavy_result['wavy_date']['权限尝试'][date_list_index] += 1
             continue
         wavy_result['wavy_date']['其他类型'][date_list_index] += 1
     return wavy_result
@@ -334,9 +334,9 @@ def show_wavy(begintime,endtime):
     #     else:
     #         wavy_result['wavy_date']['威胁情报'][date_list_index] += 0
     #     if eve_line["alert"]["category"] == "Attempted User Privilege Gain":
-    #         wavy_result['wavy_date']['暴力破解'][date_list_index] += 1
+    #         wavy_result['wavy_date']['权限尝试'][date_list_index] += 1
     #     else:
-    #         wavy_result['wavy_date']['暴力破解'][date_list_index] += 0
+    #         wavy_result['wavy_date']['权限尝试'][date_list_index] += 0
     #     if eve_line["alert"]["category"] != "Detection of a Network Scan" and eve_line["alert"]["category"] != "A Network Trojan was detected" and eve_line["alert"]["category"] != "Executable code was detected" and eve_line["alert"]["category"] != "A system call was detected":
     #         wavy_result['wavy_date']['其他类型'][date_list_index] += 1
     #     else:
