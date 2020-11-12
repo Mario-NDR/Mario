@@ -245,8 +245,10 @@ def vul_search(ip):
     except:
         result = {}
         result['vendor'] = '全球威胁情报检索引擎'
+        result['engine_result'] = []
         result['active_time'] = "None"
         result['threat_score'] = "None"
+        print(result)
         search_result.append(result)
     try:
         search_result.append(search_venuseye(ip))
