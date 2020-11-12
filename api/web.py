@@ -289,7 +289,10 @@ def show_wavy(begintime,endtime):
     wavy_result['wavy_date']['木马活动'] = [0]*len(days)
     wavy_result['wavy_date']['网络扫描'] = [0]*len(days)
     wavy_result['wavy_date']['威胁情报'] = [0]*len(days)
+    wavy_result['wavy_date']['DOS攻击'] = [0]*len(days)
     wavy_result['wavy_date']['权限尝试'] = [0]*len(days)
+    wavy_result['wavy_date']['WEB攻击'] = [0]*len(days)
+    wavy_result['wavy_date']['可疑文件名'] = [0]*len(days)
     wavy_result['wavy_date']['其他类型'] = [0]*len(days)
     wavy_result['time'] = days
     for eve_line in eve_lines:
@@ -298,6 +301,15 @@ def show_wavy(begintime,endtime):
         date_list_index = days.index(format_date)
         if eve_line["alert"]["category"] == "Executable code was detected":
             wavy_result['wavy_date']['恶意代码'][date_list_index] += 1
+            continue
+        if eve_line["alert"]["category"] == "Attempted Denial of Service":
+            wavy_result['wavy_date']['DOS攻击'][date_list_index] += 1
+            continue
+        if eve_line["alert"]["category"] == "Web Application Attack":
+            wavy_result['wavy_date']['WEB攻击'][date_list_index] += 1
+            continue
+        if eve_line["alert"]["category"] == "A suspicious filename was detected":
+            wavy_result['wavy_date']['可疑文件名'][date_list_index] += 1
             continue
         if eve_line["alert"]["category"] == "A Network Trojan was detected":
             wavy_result['wavy_date']['木马活动'][date_list_index] += 1
