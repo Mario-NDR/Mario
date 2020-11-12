@@ -233,8 +233,14 @@ def search_virustotal(query):
 
 def vul_search(ip):
     search_result = []
-    search_result.append(search_virustotal(ip))
-    search_result.append(search_venuseye(ip))
+    try:
+        search_result.append(search_virustotal(ip))
+    except :
+        pass
+    try:
+        search_result.append(search_venuseye(ip))
+    except :
+        pass
     return search_result
 
 def get_status():
