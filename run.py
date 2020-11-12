@@ -170,7 +170,6 @@ def wavy():
     begintime = request.args.get("begintime")
     endtime = request.args.get("endtime")
     wavy_lists = api.web.show_wavy(begintime,endtime)
-    print(wavy_lists)
     return jsonify(wavy_lists)
 
 @app.route('/api/ioc',methods=['GET'])
