@@ -324,6 +324,9 @@ def show_wavy(begintime,endtime):
             wavy_result['wavy_date']['权限尝试'][date_list_index] += 1
             continue
         wavy_result['wavy_date']['其他类型'][date_list_index] += 1
+    for date in list(wavy_result['wavy_date'].keys()):
+        if all( _ == 0 for _ in wavy_result['wavy_date'][date]):
+            del wavy_result['wavy_date'][date]
     return wavy_result
     # for eve_line in eve_lines:
     #     date = datetime.datetime.strptime(eve_line["timestamp"],"%Y-%m-%dT%H:%M:%S.%f%z").astimezone(datetime.timezone(datetime.timedelta(hours=8)))
