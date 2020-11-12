@@ -199,6 +199,7 @@ def search_venuseye(query):
         except:
             result['tags'] = []
     logger.info("venuseye 查询 {} 成功".format(query))
+    print(result)
     return result
 
 
@@ -243,13 +244,7 @@ def vul_search(ip):
     try:
         search_result.append(search_virustotal(ip))
     except:
-        result = {}
-        result['vendor'] = '全球威胁情报检索引擎'
-        result['engine_result'] = []
-        result['active_time'] = "None"
-        result['threat_score'] = "None"
-        print(result)
-        search_result.append(result)
+        search_result.append({'vendor': '全球威胁情报检索引擎', 'engine_result': [], 'active_time': 'None', 'threat_score': 'None'})
     try:
         search_result.append(search_venuseye(ip))
     except:
