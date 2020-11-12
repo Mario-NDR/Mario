@@ -243,7 +243,11 @@ def vul_search(ip):
     try:
         search_result.append(search_virustotal(ip))
     except:
-        pass
+        result = {}
+        result['vendor'] = '全球威胁情报检索引擎'
+        result['active_time'] = "None"
+        result['threat_score'] = "None"
+        search_result.append(result)
     try:
         search_result.append(search_venuseye(ip))
     except:
