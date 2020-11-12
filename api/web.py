@@ -10,8 +10,9 @@ import requests
 import api.analyze
 from api.ip import ipAnalysis
 import socket
-from lib.data import config, classtype,running_status
+from lib.data import config, classtype, running_status
 from flask import redirect, url_for
+
 
 def map(begintime=None, endtime=None):
     result = api.analyze.analyze_suricata_alert(
@@ -24,6 +25,7 @@ def ip(begintime=None, endtime=None):
         data="ip", begintime=begintime, endtime=endtime)
     return ipResult
 
+
 def make_tar():
     try:
         os.remove("{}/ThirPath/suricata/marioips/marioips.tar.gz".format(os.getcwd))
@@ -32,6 +34,7 @@ def make_tar():
     with tarfile.open("./ThirPath/suricata/marioips.tar.gz", "w:gz") as tar:
         tar.add("./ThirPath/suricata/marioips/",
                 arcname=os.path.basename("./ThirPath/suricata/marioips/"))
+
 
 def get_allrules(server, query=" "):
     allrules = []
@@ -45,9 +48,9 @@ def get_allrules(server, query=" "):
     for originalrule in originalrules:
         rule_info = {}
         rule_info['msg'] = re.findall(
-                r'"(.*?)"', originalrule, re.S)[0]
+            r'"(.*?)"', originalrule, re.S)[0]
         rule_info['sid'] = re.findall(
-                r'sid:(.*?);', originalrule, re.S)[0].strip()
+            r'sid:(.*?);', originalrule, re.S)[0].strip()
         if query == rule_info['sid'] or query.lower() in rule_info['msg'].lower():
             if server == "client":
                 rule_info['type'] = re.findall(
@@ -69,7 +72,7 @@ def get_allrules(server, query=" "):
 
 
 def set_clientrules(rules_info):
-    with open('./ThirPath/suricata/marioips/rules/local.rules','r') as now_rules:
+    with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as now_rules:
         rules = now_rules.readlines()
         rules_id = []
         for rule in rules:
@@ -83,7 +86,7 @@ def set_clientrules(rules_info):
     for info in rules_info:
         for rule in originalrules:
             sid = re.findall(
-                    r'sid:(.*?);', rule, re.S)[0].strip()
+                r'sid:(.*?);', rule, re.S)[0].strip()
             if info['id'] == sid not in rules_id:
                 clientrules_file.write(rule.replace(
                     re.search(r'^(.*?) ', rule, re.S).group(0), info['type'] + " "))
@@ -91,45 +94,47 @@ def set_clientrules(rules_info):
     originalrules_file.close()
     return "yes"
 
+
 def del_rules(del_sid):
     reman_rules = []
     if del_sid == "all":
         with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
             f.truncate()
         return "del all rules ok"
-    del_result="del false"
+    del_result = "del false"
     with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as clientrules_file:
         for rules in clientrules_file:
             sid = re.findall(
-                    r'sid:(.*?);', rules, re.S)[0].strip()
+                r'sid:(.*?);', rules, re.S)[0].strip()
             if sid != del_sid:
                 reman_rules.append(rules)
             else:
-                del_result="del rules {} ok".format(del_sid)
+                del_result = "del rules {} ok".format(del_sid)
     with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
     return del_result
 
 
-def change_rules(change_sid,chang_type):
+def change_rules(change_sid, chang_type):
     reman_rules = []
-    del_result="del false"
+    del_result = "del false"
     with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as clientrules_file:
         for rules in clientrules_file:
             sid = re.findall(
-                    r'sid:(.*?);', rules, re.S)[0].strip()
+                r'sid:(.*?);', rules, re.S)[0].strip()
             if sid != change_sid:
                 reman_rules.append(rules)
             else:
                 rules_type = re.findall(
                     r'^(.*?) ', rules, re.S)[0]
-                rules = rules.replace(rules_type,chang_type)
+                rules = rules.replace(rules_type, chang_type)
                 reman_rules.append(rules)
     with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
     return del_result
+
 
 def customization_install(src_ip):
     netcard_info = []
@@ -160,7 +165,7 @@ def customization_install(src_ip):
 def search_venuseye(query):
     result = {}
     result['vendor'] = '启明星辰金睛'
-    if re.findall(r'\d+\.\d+\.\d+\.\d+',query):
+    if re.findall(r'\d+\.\d+\.\d+\.\d+', query):
         try:
             search_result = json.loads(requests.post(
                 "https://www.venuseye.com.cn/ve/ip", {'target': '{}'.format(query)}).text)
@@ -203,7 +208,7 @@ def search_virustotal(query):
     headers = {
         "x-apikey": "e6184c04de532cd5a094f3fd6b3ce36cd187e41e671b5336fd69862257d07a9a",
     }
-    if re.findall(r'\d+\.\d+\.\d+\.\d+',query):
+    if re.findall(r'\d+\.\d+\.\d+\.\d+', query):
         url = 'https://www.virustotal.com/api/v3/ip_addresses/{}'.format(query)
     else:
         url = 'https://www.virustotal.com/api/v3/domains/{}'.format(query)
@@ -215,18 +220,20 @@ def search_virustotal(query):
         result['engine_result'] = []
         for search_iterm in search_result['data']['attributes']['last_analysis_results']:
             search_iterm_infos = search_result['data']['attributes']['last_analysis_results'][search_iterm]
-            if search_iterm_infos['result'] != 'clean' and search_iterm_infos['result'] != 'unrated' :
-                result['engine_result'].append(search_iterm_infos['engine_name'])
+            if search_iterm_infos['result'] != 'clean' and search_iterm_infos['result'] != 'unrated':
+                result['engine_result'].append(
+                    search_iterm_infos['engine_name'])
         analysis_results = search_result['data']['attributes']['last_analysis_stats']
-        threat_score = analysis_results['malicious']+analysis_results['suspicious']
+        threat_score = analysis_results['malicious'] + \
+            analysis_results['suspicious']
         try:
             result['active_time'] = search_result['data']['attributes']['last_modification_date']
         except:
             result['active_time'] = "None"
         try:
             result['threat_score'] = threat_score
-        except :
-            result['threat_score'] = "None"    
+        except:
+            result['threat_score'] = "None"
     logger.info("virustotal 查询 {} 成功".format(query))
     return result
 
@@ -235,44 +242,57 @@ def vul_search(ip):
     search_result = []
     try:
         search_result.append(search_virustotal(ip))
-    except :
+    except:
         pass
     try:
         search_result.append(search_venuseye(ip))
-    except :
+    except:
         pass
+
     return search_result
+
 
 def get_status():
     start_time = running_status['starttime']
     now_time = datetime.datetime.now()
     time_diff = now_time-start_time
-    timestatus={}
+    timestatus = {}
     diss_seconds = time_diff.seconds
-    timestatus['minutes'],timestatus['secouds'] = divmod(diss_seconds,60)
-    timestatus['hours'],timestatus['minutes'] = divmod(timestatus['minutes'],60)
+    timestatus['minutes'], timestatus['secouds'] = divmod(diss_seconds, 60)
+    timestatus['hours'], timestatus['minutes'] = divmod(
+        timestatus['minutes'], 60)
     timestatus['days'] = time_diff.days
     return json.dumps(timestatus)
 
+
 def show_setting():
-    setting={}
+    setting = {}
     with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'r') as script_senteve:
         script_content = script_senteve.read()
-        setting['max_logfile_num'] = re.findall(r'-ge (.*?) ]',script_content,re.S)[0]
-        setting['heartbeat_time'] = re.findall(r'sleep (.*?);',script_content,re.S)[0]
-    with open('./ThirPath/suricata/marioips/marioips.yaml','r') as marioips_yaml:
+        setting['max_logfile_num'] = re.findall(
+            r'-ge (.*?) ]', script_content, re.S)[0]
+        setting['heartbeat_time'] = re.findall(
+            r'sleep (.*?);', script_content, re.S)[0]
+    with open('./ThirPath/suricata/marioips/marioips.yaml', 'r') as marioips_yaml:
         marioip_setting = marioips_yaml.read()
-        setting['save_pcap'] = re.findall(r'pcap-log:.+?enabled: (.*?) #setting save_pcap',marioip_setting,re.DOTALL)[0]
-        setting['pcap_size'] = re.findall(r'\slimit: (.*?b)',marioip_setting)[0]
-        setting['save_file'] = re.findall(r'file-store:.+?enabled: (.*?) #setting save_file',marioip_setting,re.DOTALL)[0]
+        setting['save_pcap'] = re.findall(
+            r'pcap-log:.+?enabled: (.*?) #setting save_pcap', marioip_setting, re.DOTALL)[0]
+        setting['pcap_size'] = re.findall(
+            r'\slimit: (.*?b)', marioip_setting)[0]
+        setting['save_file'] = re.findall(
+            r'file-store:.+?enabled: (.*?) #setting save_file', marioip_setting, re.DOTALL)[0]
     return json.dumps(setting)
+
 
 def change_setting(settings):
     with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'r') as script_senteve:
         old_base_settings = script_senteve.read()
-        max_logfile_num = re.findall(r'-ge (.*?) ]',old_base_settings,re.S)[0]
-        heartbeat_time = re.findall(r'sleep (.*?);',old_base_settings,re.S)[0]
-        new_base_settings = old_base_settings.replace(max_logfile_num,settings['max_logfile_num']).replace(heartbeat_time,settings['heartbeat_time'])
+        max_logfile_num = re.findall(
+            r'-ge (.*?) ]', old_base_settings, re.S)[0]
+        heartbeat_time = re.findall(
+            r'sleep (.*?);', old_base_settings, re.S)[0]
+        new_base_settings = old_base_settings.replace(
+            max_logfile_num, settings['max_logfile_num']).replace(heartbeat_time, settings['heartbeat_time'])
     with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'w') as script_senteve:
         script_senteve.write(new_base_settings)
     # with open('./ThirPath/suricata/marioips/marioips.yaml','r') as marioips_yaml:
@@ -287,8 +307,9 @@ def change_setting(settings):
     config['update_setting_time'] = int(time.time())
     return "修改成功"
 
-def show_wavy(begintime,endtime):
-    eve_lines,days = api.analyze.analyze_to_wavy(begintime,endtime)
+
+def show_wavy(begintime, endtime):
+    eve_lines, days = api.analyze.analyze_to_wavy(begintime, endtime)
     wavy_result = {}
     wavy_result['wavy_date'] = {}
     wavy_result['wavy_date']['恶意代码'] = [0]*len(days)
@@ -302,8 +323,9 @@ def show_wavy(begintime,endtime):
     wavy_result['wavy_date']['其他类型'] = [0]*len(days)
     wavy_result['time'] = days
     for eve_line in eve_lines:
-        date = datetime.datetime.strptime(eve_line["timestamp"],"%Y-%m-%dT%H:%M:%S.%f%z").astimezone(datetime.timezone(datetime.timedelta(hours=8)))
-        format_date = datetime.datetime.strftime(date,"%Y-%m-%d")
+        date = datetime.datetime.strptime(
+            eve_line["timestamp"], "%Y-%m-%dT%H:%M:%S.%f%z").astimezone(datetime.timezone(datetime.timedelta(hours=8)))
+        format_date = datetime.datetime.strftime(date, "%Y-%m-%d")
         date_list_index = days.index(format_date)
         if eve_line["alert"]["category"] == "Executable code was detected":
             wavy_result['wavy_date']['恶意代码'][date_list_index] += 1
@@ -331,7 +353,7 @@ def show_wavy(begintime,endtime):
             continue
         wavy_result['wavy_date']['其他类型'][date_list_index] += 1
     for date in list(wavy_result['wavy_date'].keys()):
-        if all( _ == 0 for _ in wavy_result['wavy_date'][date]):
+        if all(_ == 0 for _ in wavy_result['wavy_date'][date]):
             del wavy_result['wavy_date'][date]
     return wavy_result
     # for eve_line in eve_lines:
