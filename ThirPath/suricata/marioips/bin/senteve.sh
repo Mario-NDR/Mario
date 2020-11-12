@@ -1,7 +1,7 @@
 #!/bin/sh
 while true;do
 	bash /opt/marioips/bin/repost.sh
-	# wget http://remoteadd:5000/local.rules -O /opt/marioips/rules/local.rules
+	wget http://remoteadd:5000/local.rules -O /opt/marioips/rules/local.rules
 	newfile="eve_`date '+%Y%m%d%H%M%S'`.json"
 	newpcap_file="eve_`date '+%Y%m%d%H%M%S'`.pcap"
 	bash /opt/marioips/bin/update.sh
