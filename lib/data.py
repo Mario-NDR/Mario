@@ -6,7 +6,7 @@ classtype = {
     'attempted-user': '权限尝试',
     'attempted-dos': 'DOS攻击',
     'attempted-admin': '权限尝试',
-    'suspicious-filename-detect':'可疑文件名'
+    'suspicious-filename-detect':'可疑文件名',
     'web-application-activity': 'WEB攻击',
     'web-application-attack': 'WEB攻击',
     'system-call-detect': '威胁情报'
