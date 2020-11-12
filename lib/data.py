@@ -5,6 +5,7 @@ classtype = {
     'trojan-activity': "木马活动",
     'attempted-user': '权限尝试',
     'attempted-dos': 'DOS攻击',
+    'denial-of-service':'DOS攻击',
     'attempted-admin': '权限尝试',
     'suspicious-filename-detect':'可疑文件名',
     'web-application-attack': 'WEB攻击',
