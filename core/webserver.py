@@ -132,7 +132,7 @@ def webserver():
     def get_clientrules():
         logger.info("下发防御策略至 {}".format(request.remote_addr))
         clientrules = open(
-            './ThirPath/suricata/marioips/rules/local.rules', 'r')
+            './ThirPath/marioips/rules/local.rules', 'r')
         rulesfile = clientrules.read()
         clientrules.close()
         return rulesfile
@@ -140,7 +140,7 @@ def webserver():
     @app.route('/marioips.tar.gz')
     def send_conf_tar():
         logger.info("{} 下载客户端主程序".format(request.remote_addr))
-        file_dir = os.getcwd() + "/ThirPath/suricata/"
+        file_dir = os.getcwd() + "/ThirPath/marioips/"
         api.web.make_tar()
         response = make_response(send_from_directory(
             file_dir, "marioips.tar.gz", as_attachment=True))

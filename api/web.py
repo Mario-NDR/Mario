@@ -28,22 +28,22 @@ def ip(begintime=None, endtime=None):
 
 def make_tar():
     try:
-        os.remove("{}/ThirPath/suricata/marioips/marioips.tar.gz".format(os.getcwd))
+        os.remove("{}/ThirPath/marioips/marioips.tar.gz".format(os.getcwd))
     except:
         pass
-    with tarfile.open("./ThirPath/suricata/marioips.tar.gz", "w:gz") as tar:
-        tar.add("./ThirPath/suricata/marioips/",
-                arcname=os.path.basename("./ThirPath/suricata/marioips/"))
+    with tarfile.open("./ThirPath/marioips/marioips.tar.gz", "w:gz") as tar:
+        tar.add("./ThirPath/marioips/",
+                arcname=os.path.basename("./ThirPath/marioips/"))
 
 
 def get_allrules(server, query=" "):
     allrules = []
     if server == "client":
         originalrules_file = open(
-            './ThirPath/suricata/marioips/rules/local.rules', 'r')
+            './ThirPath/marioips/rules/local.rules', 'r')
     else:
         originalrules_file = open(
-            './ThirPath/suricata/marioips/rules/all.rules', 'r')
+            './ThirPath/marioips/rules/all.rules', 'r')
     originalrules = originalrules_file.readlines()
     for originalrule in originalrules:
         rule_info = {}
@@ -72,17 +72,17 @@ def get_allrules(server, query=" "):
 
 
 def set_clientrules(rules_info):
-    with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as now_rules:
+    with open('./ThirPath/marioips/rules/local.rules', 'r') as now_rules:
         rules = now_rules.readlines()
         rules_id = []
         for rule in rules:
             sid = re.findall(r'sid:(.*?);', rule, re.S)[0].strip()
             rules_id.append(sid)
     originalrules_file = open(
-        './ThirPath/suricata/marioips/rules/all.rules', 'r')
+        './ThirPath/marioips/rules/all.rules', 'r')
     originalrules = originalrules_file.readlines()
     clientrules_file = open(
-        './ThirPath/suricata/marioips/rules/local.rules', 'a+')
+        './ThirPath/marioips/rules/local.rules', 'a+')
     for info in rules_info:
         for rule in originalrules:
             sid = re.findall(
@@ -98,11 +98,11 @@ def set_clientrules(rules_info):
 def del_rules(del_sid):
     reman_rules = []
     if del_sid == "all":
-        with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
+        with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
             f.truncate()
         return "del all rules ok"
     del_result = "del false"
-    with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as clientrules_file:
+    with open('./ThirPath/marioips/rules/local.rules', 'r') as clientrules_file:
         for rules in clientrules_file:
             sid = re.findall(
                 r'sid:(.*?);', rules, re.S)[0].strip()
@@ -110,7 +110,7 @@ def del_rules(del_sid):
                 reman_rules.append(rules)
             else:
                 del_result = "del rules {} ok".format(del_sid)
-    with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
+    with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
     return del_result
@@ -119,7 +119,7 @@ def del_rules(del_sid):
 def change_rules(change_sid, chang_type):
     reman_rules = []
     del_result = "del false"
-    with open('./ThirPath/suricata/marioips/rules/local.rules', 'r') as clientrules_file:
+    with open('./ThirPath/marioips/rules/local.rules', 'r') as clientrules_file:
         for rules in clientrules_file:
             sid = re.findall(
                 r'sid:(.*?);', rules, re.S)[0].strip()
@@ -130,7 +130,7 @@ def change_rules(change_sid, chang_type):
                     r'^(.*?) ', rules, re.S)[0]
                 rules = rules.replace(rules_type, chang_type)
                 reman_rules.append(rules)
-    with open('./ThirPath/suricata/marioips/rules/local.rules', 'w') as f:
+    with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
     return del_result
@@ -151,12 +151,12 @@ def customization_install(src_ip):
         else:
             continue
     try:
-        install_file = open(os.getcwd() + "/ThirPath/suricata/install.sh", "r")
+        install_file = open(os.getcwd() + "/ThirPath/marioips/install.sh", "r")
         file_read = install_file.read().replace("ipadd", install_ip)
         install_file.close()
         return file_read
     except:
-        install_file = open(os.getcwd() + "/ThirPath/suricata/install.sh", "r")
+        install_file = open(os.getcwd() + "/ThirPath/marioips/install.sh", "r")
         file_read = install_file.read().replace("ipadd", config['ip'][0])
         install_file.close()
         return file_read
@@ -267,13 +267,13 @@ def get_status():
 
 def show_setting():
     setting = {}
-    with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'r') as script_senteve:
+    with open('./ThirPath/marioips/bin/senteve.sh', 'r') as script_senteve:
         script_content = script_senteve.read()
         setting['max_logfile_num'] = re.findall(
             r'-ge (.*?) ]', script_content, re.S)[0]
         setting['heartbeat_time'] = re.findall(
             r'sleep (.*?);', script_content, re.S)[0]
-    with open('./ThirPath/suricata/marioips/marioips.yaml', 'r') as marioips_yaml:
+    with open('./ThirPath/marioips/marioips.yaml', 'r') as marioips_yaml:
         marioip_setting = marioips_yaml.read()
         setting['save_pcap'] = re.findall(
             r'pcap-log:.+?enabled: (.*?) #setting save_pcap', marioip_setting, re.DOTALL)[0]
@@ -285,7 +285,7 @@ def show_setting():
 
 
 def change_setting(settings):
-    with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'r') as script_senteve:
+    with open('./ThirPath/marioips/bin/senteve.sh', 'r') as script_senteve:
         old_base_settings = script_senteve.read()
         max_logfile_num = re.findall(
             r'-ge (.*?) ]', old_base_settings, re.S)[0]
@@ -293,15 +293,15 @@ def change_setting(settings):
             r'sleep (.*?);', old_base_settings, re.S)[0]
         new_base_settings = old_base_settings.replace(
             max_logfile_num, settings['max_logfile_num']).replace(heartbeat_time, settings['heartbeat_time'])
-    with open('./ThirPath/suricata/marioips/bin/senteve.sh', 'w') as script_senteve:
+    with open('./ThirPath/marioips/bin/senteve.sh', 'w') as script_senteve:
         script_senteve.write(new_base_settings)
-    # with open('./ThirPath/suricata/marioips/marioips.yaml','r') as marioips_yaml:
+    # with open('./ThirPath/marioips/marioips.yaml','r') as marioips_yaml:
     #     old_mario_setting = marioips_yaml.read()
     #     save_pcap = re.findall(r'pcap-log:.+?enabled: (.*?) #setting save_pcap',old_mario_setting,re.DOTALL)[0]
     #     pcap_size = re.findall(r'\slimit: (.*?b)',old_mario_setting)[0]
     #     save_file = re.findall(r'file-store:.+?enabled: (.*?) #setting save_file',old_mario_setting,re.DOTALL)[0]
     #     new_mario_settings = old_mario_setting.replace(save_pcap,settings['save_pcap']).replace(pcap_size,settings['pcap_size']).replace(save_file,settings['save_file'])
-    # with open('./ThirPath/suricata/marioips/marioips.yaml','w') as marioips_yaml:
+    # with open('./ThirPath/marioips/marioips.yaml','w') as marioips_yaml:
     #     marioips_yaml.write(new_mario_settings)
     logger.warning("配置文件修改 {}".format(settings))
     config['update_setting_time'] = int(time.time())

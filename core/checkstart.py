@@ -24,8 +24,8 @@ def mongo_connect():
         config['mongo_url'] = "mongodb://root:example@0.0.0.0:27017/"
         logger.info("数据库连接成功")
     else:
-        if connect("mongodb://root:example@mongodb:27017/") != False:
-            config['mongo_url'] = "mongodb://root:example@mongodb:27017/"
+        if connect("mongodb://root:example@34.64.197.155:27017/") != False:
+            config['mongo_url'] = "mongodb://root:example@34.64.197.155:27017/"
             logger.info("数据库连接成功")
         else:
             logger.error("请检查数据库设置")

@@ -98,3 +98,4 @@ pass tcp any any -> any any (msg:"系统 API 放行规则 安装脚本"; content
 pass tcp any any -> any any (msg:"系统 API 放行规则 规则下发"; content:"local.rules"; http_uri; sid:6036; rev:1)
 pass tcp any any -> any any (msg:"系统 API 放行规则 安装包下发"; content:"marioips.tar.gz"; http_uri; sid:6037; rev:1)
 pass tcp any 27017 -> any any (msg:"系统 API 放行规则 数据库读取"; content:"payload_printable"; http_uri; sid:6038; rev:1)
+pass tcp any any -> any 27017 (msg:"系统 API 放行规则 数据库插入"; content:"payload_printable"; http_uri; sid:6039; rev:1)

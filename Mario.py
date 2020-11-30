@@ -6,7 +6,6 @@ from api.ip import ipAnalysis
 from lib.data import config
 from core.webserver import webserver
 from run import app
-from api.mongo import mongo_connect
 
 
 def start():
