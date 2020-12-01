@@ -4,8 +4,8 @@ if [ ! -n "$1" ] ;then
     echo -e "\033[32m | Install suricata and Depend on the environment  | \033[0m"
     echo -e "\033[32m -------------------------------------------------- \033[0m"
     apt update -y && \
-    sudo apt-get install software-properties-common -y && \
-    sudo add-apt-repository ppa:oisf/suricata-stable -y && \
+    apt-get install software-properties-common -y && \
+    add-apt-repository ppa:oisf/suricata-stable -y && \
     apt update -y && \
     apt -y install libpcre3 libpcre3-dbg libpcre3-dev build-essential autoconf automake libtool libpcap-dev libnet1-dev libyaml-0-2 libyaml-dev zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 make libmagic-dev libjansson-dev libjansson4 pkg-config libnetfilter-queue-dev libnetfilter-queue1 libnfnetlink-dev libnfnetlink0 suricata
     if [ $? -eq 0 ]; then
