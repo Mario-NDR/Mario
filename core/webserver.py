@@ -52,7 +52,9 @@ def webserver():
                 <input type=submit value=Upload>
             </form>
             '''
-
+    @app.route('/api/cleanstatus',methods=['GET'])
+    def get_clean_status():
+        return clean_status['clean_db']
     @app.route('/api/db', methods=['GET', 'POST'])
     def clean_db():
         if request.method == 'GET':
