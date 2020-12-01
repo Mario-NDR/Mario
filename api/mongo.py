@@ -77,8 +77,12 @@ def show_db():
     db_info['total'] = running_status['total']
     try:
         db_info['last_clean'] = clean_status['last_clean']
+        timediff = int(time.time()) - db_info['last_clean']
+        if timediff > 3600:
+            clean_status['clean_db'] == "waiting process"
     except:
         db_info['last_clean'] = "Never run cleaning procedures"
+        clean_status['clean_db'] == "waiting process"
     for coll in coll_names:
         if coll in ['alert', 'stats']:
             continue
