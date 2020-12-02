@@ -14,6 +14,12 @@ def evetomongo(eve_file=None):
         config['mongo_url']
     except:
         start()
+    try:
+        timediff = int(time.time()) - db_info['last_clean']
+        if timediff > 3600:
+            clean_status['clean_db'] = "waiting process"
+    except:
+        db_info['last_clean'] = "Never run cleaning procedures"
     if clean_status['clean_db'] == "waiting process":
         logger.info("数据库清理程序触发")
         clean_status['clean_db'] = "running"
@@ -77,11 +83,6 @@ def show_db():
     db_info['total'] = running_status['total']
     try:
         db_info['last_clean'] = clean_status['last_clean']
-        timediff = int(time.time()) - db_info['last_clean']
-        if timediff > 3600:
-            clean_status['clean_db'] = "waiting process"
-        else:
-            print("timediff {}".format(timediff))
     except:
         clean_status['clean_db'] = "waiting process"
         db_info['last_clean'] = "Never run cleaning procedures"
