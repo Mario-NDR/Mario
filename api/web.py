@@ -72,6 +72,7 @@ def get_allrules(server, query=" "):
 
 
 def set_clientrules(rules_info):
+    config['update_setting_time'] = int(time.time())
     with open('./ThirPath/marioips/rules/local.rules', 'r') as now_rules:
         rules = now_rules.readlines()
         rules_id = []
@@ -96,6 +97,7 @@ def set_clientrules(rules_info):
 
 
 def del_rules(del_sid):
+    config['update_setting_time'] = int(time.time())
     reman_rules = []
     if del_sid == "all":
         with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
@@ -117,6 +119,7 @@ def del_rules(del_sid):
 
 
 def change_rules(change_sid, chang_type):
+    config['update_setting_time'] = int(time.time())
     reman_rules = []
     del_result = "del false"
     with open('./ThirPath/marioips/rules/local.rules', 'r') as clientrules_file:
