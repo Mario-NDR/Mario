@@ -31,23 +31,23 @@ def evetomongo(eve_file=None):
     num = 0
     if eve_file:
         eve_lines = eve_file
-    for eve_line in eve_lines:
-        try:
-            eve_line = json.loads(eve_line.decode('utf-8'))
-        except:
-            eve_line = json.loads(eve_line)
-        mycol = mydb[eve_line["event_type"]]
-        mydict = eve_line
-        try:
-            mydict['client_ip'] = config['client_ip']
-        except Exception as e:
-            pass
-        mycol.insert_one(mydict)
-        num += 1
-    running_status['total'] += num
-    logger.info("新增数据{}条".format(num))
-    myclient.close()
-    api.analyze.analyze_suricata_alert()
+        for eve_line in eve_lines:
+            try:
+                eve_line = json.loads(eve_line.decode('utf-8'))
+            except:
+                eve_line = json.loads(eve_line)
+            mycol = mydb[eve_line["event_type"]]
+            mydict = eve_line
+            try:
+                mydict['client_ip'] = config['client_ip']
+            except Exception as e:
+                pass
+            mycol.insert_one(mydict)
+            num += 1
+        running_status['total'] += num
+        logger.info("新增数据{}条".format(num))
+        myclient.close()
+        api.analyze.analyze_suricata_alert()
     return num
 
 
