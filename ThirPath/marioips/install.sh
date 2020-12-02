@@ -8,7 +8,6 @@ if [ ! -n "$1" ] ;then
     add-apt-repository ppa:oisf/suricata-stable -y && \
     apt update -y && \
     apt -y install libpcre3 libpcre3-dbg libpcre3-dev build-essential autoconf automake libtool libpcap-dev libnet1-dev libyaml-0-2 libyaml-dev zlib1g zlib1g-dev libcap-ng-dev libcap-ng0 make libmagic-dev libjansson-dev libjansson4 pkg-config libnetfilter-queue-dev libnetfilter-queue1 libnfnetlink-dev libnfnetlink0 suricata
-    sed -i "s/# Basic Settings/client_max_body_size 200m;/g" /etc/nginx/nginx.conf
     if [ $? -eq 0 ]; then
         echo -e "\033[32m -------------------------------------------------- \033[0m"
         echo -e "\033[32m |        Download the configuration file          | \033[0m"
