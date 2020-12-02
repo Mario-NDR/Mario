@@ -19,7 +19,7 @@ def evetomongo(eve_file=None):
         if timediff > 3600:
             clean_status['clean_db'] = "waiting process"
     except:
-        pass
+        clean_status['last_clean'] = int(time.time())
     if clean_status['clean_db'] == "waiting process":
         logger.info("数据库清理程序触发")
         clean_status['clean_db'] = "running"
