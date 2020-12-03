@@ -52,3 +52,4 @@ pass tcp any 27017 -> any any (msg:"系统 API 放行规则 数据库读取"; co
 pass tcp any any -> any 27017 (msg:"系统 API 放行规则 数据库插入"; content:"payload_printable"; sid:6039; rev:1)
 pass tcp any 8000 -> any any (msg:"系统 API 放行规则 uwsgi response"; content:"application/json"; sid:6040; rev:1)
 pass tcp any any -> any 8000 (msg:"系统 API 放行规则 uwsgi requests"; content:"application/json"; sid:6041; rev:1)
+pass tcp ant ant -> ant ant (msg:"系统 API 放行规则 eve.json"; content:"timestamp"; http_client_body; content:"flow_id"; http_client_body; sid:6042; rev:1;)
