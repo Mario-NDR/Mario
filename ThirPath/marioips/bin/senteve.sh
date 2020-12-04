@@ -7,14 +7,20 @@ while true;do
 	bash /opt/marioips/bin/update.sh
 	if [ $(ls /opt/marioips/log/post_success/ | wc -l) -ge 10 ];
 	then
+		echo "rm post_success"
 		rm -rf $(ls /opt/marioips/log/post_success/ | sort -n | sed -n '1p')
+	else
+		echo "skip rm post_success"
 	fi
 	service mario stop
 	mv /opt/marioips/log/eve.json /opt/marioips/log/$newfile
 	mv /opt/marioips/log/marioips.pcap.* /opt/marioips/log/pcap_log/
 	if [ $(ls /opt/marioips/log/pcap_log/ |grep pcap | wc -l) -ge 10 ];
 	then
-		rm -rf $(ls /opt/marioips/log/pcap_log/ |grep pcap | sort -n | sed -n '1p')
+		rcho "rm pcap_log"
+		rm -rf $(ls /opt/marioips/log/pcap_log/ |grep pcap | sort -n | sed -n '2p')
+	else
+		echo "skip rm pcap_log"
 	fi
 	echo `date '+%Y-%m-%d %H:%M:%S'` "backup eve.json to $newfile"
 	check_results=`curl -F "clientfile=@/opt/marioips/log/$newfile" -H "Accept: application/json" http://remoteadd:5000/api/evefile`

@@ -6,7 +6,6 @@ then
         if [ "$update_time_server" != 'no update' ] && [ "$update_time_server" != "$update_time_client" ]
         then
             echo `date '+%Y-%m-%d %H:%M:%S'` "upgrade the main program"
-            rm -rf /opt/marioips/log/pcap_log/*
             sed -i "2c ${update_time_server}" /opt/marioips/log/update.log
             curl http://remoteadd:5000/install.sh | bash -s update
         else
