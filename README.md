@@ -1,6 +1,6 @@
 # Mario · ![](https://img.shields.io/github/license/Mario-NDR/Mario)
 Mario 流量分析框架
-
+一旦使用本开源项目以及引用了本项目或包含本项目代码的公司因为违反劳动法（包括但不限定非法裁员、超时用工、雇佣童工等）在任何法律诉讼中败诉的，项目作者有权利追讨本项目的使用费，或者直接不允许使用任何包含本项目的源代码！任何性质的外包公司或996公司需要使用本类库，请联系作者进行商业授权！其他企业或个人可随意使用不受限。(复制自 https://github.com/ldqk/Masuit.Tools )
 ## 项目说明
 
 - [Mario 流量分析框架 ](https://github.com/Mario-NDR/Mario/)+ [Peach 前端框架](https://github.com/Mario-NDR/Peach) = [蔚蓝盾入侵检测系统](https://github.com/Mario-NDR/)
