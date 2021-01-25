@@ -34,9 +34,9 @@ or
 bash build.sh
 ```
 访问：
-http://127.0.0.1:9955 登录界面  
+http://127.0.0.1:9955 登录界面
 
-### 前端静态文件
+### 前端静态文件 (非二开不用看)
 `ThirPath/web`  
 获取最新前端静态文件方法  
 `curl https://api.github.com/repos/Mario-NDR/Peach/releases/latest | sed -r -n 's/.*"browser_download_url": *"(.*)".*/\1/p' | wget -q -i -`
@@ -55,13 +55,14 @@ curl ip:5000/install.sh | bash
 ```bash
 ping ip
 ```
-如果 ping 不同则表示成功部署
-## 使用方法
+如果 ping 不通则表示成功部署
+
+## 使用方法 （非二开不用看）
 - web（后端）：
 ```python
 python3 run.py
 ```
-## 前端接口文档
+## 前端接口文档 （非二开不用看）
 - 威胁情报地图模块 （http://127.0.0.1:5000/api/map）
 
 使用`GET`方法设置时间范围`http://127.0.0.1:5000/map?begintime=2019-08-13T20:52:58+0000&endtime=2019-08-23T20:52:58+0000`获取时间段内的数据
