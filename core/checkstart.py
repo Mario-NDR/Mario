@@ -1,9 +1,10 @@
-from lib.data import running_status,config,clean_status
+from lib.data import running_status, config, clean_status
 from api.logger import logger
 import sys
 from api.ip import ipAnalysis
 import datetime
 import pymongo
+
 
 def connect(mongo_url):
     count = 0
@@ -19,6 +20,7 @@ def connect(mongo_url):
             return False
     return client
 
+
 def mongo_connect():
     if connect("mongodb://root:example@0.0.0.0:27017/") != False:
         config['mongo_url'] = "mongodb://root:example@0.0.0.0:27017/"
@@ -31,15 +33,17 @@ def mongo_connect():
             logger.error("请检查数据库设置")
             sys.exit()
 
+
 def check_env():
     config['ip'] = ipAnalysis.get_local_ip()
     mongo_connect()
+
 
 def start():
     check_env()
     try:
         clean_status['clean_db']
-    except :
+    except:
         clean_status['clean_db'] = "ready"
     try:
         running_status['starttime']
@@ -47,5 +51,5 @@ def start():
         running_status['starttime'] = datetime.datetime.now()
     try:
         running_status['total']
-    except :
+    except:
         running_status['total'] = 0

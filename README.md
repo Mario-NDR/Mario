@@ -23,9 +23,14 @@ Mario 流量分析框架
 
   我们的项目永久开源，大家可以随便使用，请勿用于商业用途
 
-- 演示地址：
+## 展示
 
-  [蔚蓝盾](http://fenglipaipai.xyz)
+!(./photos/mario_map.png)[./photos/mario_map.png]
+!(./photos/mario_ana.png)[./photos/mario_ana.png]
+!(./photos/mario_alert.png)[./photos/mario_alert.png]
+!(./photos/mario_alert_detil.png)[./photos/mario_alert_detil.png]
+!(./photos/mario_virtual.png)[./photos/mario_virtual.png]
+
 
 ## 服务端部署：
 ```bash
@@ -62,9 +67,3 @@ ping ip
 ```python
 python3 run.py
 ```
-## 前端接口文档 （非二开不用看）
-- 威胁情报地图模块 （http://127.0.0.1:5000/api/map）
-
-使用`GET`方法设置时间范围`http://127.0.0.1:5000/map?begintime=2019-08-13T20:52:58+0000&endtime=2019-08-23T20:52:58+0000`获取时间段内的数据
-
-- 还有好多，懒得写了

@@ -11,6 +11,7 @@ from flask import Flask, request, redirect, url_for, jsonify, send_from_director
 
 def webserver():
     app = Flask(__name__)
+
     @app.route('/api/map', methods=['GET'])
     def map():
         begintime = request.args.get("begintime")
@@ -52,9 +53,11 @@ def webserver():
                 <input type=submit value=Upload>
             </form>
             '''
-    @app.route('/api/cleanstatus',methods=['GET'])
+
+    @app.route('/api/cleanstatus', methods=['GET'])
     def get_clean_status():
         return clean_status['clean_db']
+
     @app.route('/api/db', methods=['GET', 'POST'])
     def clean_db():
         if request.method == 'GET':

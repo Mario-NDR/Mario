@@ -3,8 +3,8 @@ import api.web
 import api.autorules
 from api.mongo import evetomongo
 from core.checkstart import start
-from lib.data import config, clean_status,src_ip,dest_ip
-from api.mongo import clean_mongo, show_db,show_ioc
+from lib.data import config, clean_status, src_ip, dest_ip
+from api.mongo import clean_mongo, show_db, show_ioc
 from api.logger import logger
 import os
 import json
@@ -12,6 +12,8 @@ from flask import Flask, request, redirect, url_for, jsonify, send_from_director
 
 
 app = Flask(__name__)
+
+
 @app.route('/api/map', methods=['GET'])
 def map():
     begintime = request.args.get("begintime")
@@ -48,7 +50,8 @@ def get_status():
     status = api.web.get_status()
     return status
 
-@app.route('/api/cleanstatus',methods=['GET'])
+
+@app.route('/api/cleanstatus', methods=['GET'])
 def get_clean_status():
     return clean_status['clean_db']
 
@@ -99,18 +102,18 @@ def change_client_rules():
 
 @app.route('/api/vulsearch', methods=['POST'])
 def vul_search():
-        query = json.loads(request.get_data().decode('utf-8'))
-        search_result = api.web.vul_search(query['query'])
-        result = {}
-        result['data'] = search_result
+    query = json.loads(request.get_data().decode('utf-8'))
+    search_result = api.web.vul_search(query['query'])
+    result = {}
+    result['data'] = search_result
+    try:
+        result['count'] = src_ip[query['query']]
+    except:
         try:
-            result['count'] = src_ip[query['query']]   
-        except :
-            try:
-                result['count'] = dest_ip[query['query']]
-            except :
-                pass
-        return jsonify(result)
+            result['count'] = dest_ip[query['query']]
+        except:
+            pass
+    return jsonify(result)
 
 
 @app.route('/api/downloadlog', methods=['GET'])
@@ -161,38 +164,46 @@ def checkupdate():
     if operation == "check":
         try:
             config['update_setting_time']
-        except :
+        except:
             config['update_setting_time'] = 'no update'
         return str(config['update_setting_time'])
 
-@app.route('/api/wavy',methods=['GET'])
+
+@app.route('/api/wavy', methods=['GET'])
 def wavy():
     begintime = request.args.get("begintime")
     endtime = request.args.get("endtime")
-    wavy_lists = api.web.show_wavy(begintime,endtime)
+    wavy_lists = api.web.show_wavy(begintime, endtime)
     return jsonify(wavy_lists)
 
-@app.route('/api/ioc',methods=['GET'])
+
+@app.route('/api/ioc', methods=['GET'])
 def ioc_statistical():
     search = request.args.get("search")
     if search == "all":
         statistical = show_ioc()
         return statistical
-@app.route('/api/srcip',methods=['GET'])
+
+
+@app.route('/api/srcip', methods=['GET'])
 def count_srcsip():
-    result = sorted(src_ip.items(), key=lambda d: d[1],reverse=True)
+    result = sorted(src_ip.items(), key=lambda d: d[1], reverse=True)
     src_ip_sorted = {}
     for iterm in result:
         src_ip_sorted[iterm[0]] = int(iterm[1])
     return jsonify(src_ip_sorted)
-@app.route('/api/destip',methods=['GET'])
+
+
+@app.route('/api/destip', methods=['GET'])
 def count_destip():
-    result = sorted(dest_ip.items(), key=lambda d: d[1],reverse=True)
+    result = sorted(dest_ip.items(), key=lambda d: d[1], reverse=True)
     dest_ip_sorted = {}
     for iterm in result:
         dest_ip_sorted[iterm[0]] = int(iterm[1])
     return jsonify(dest_ip_sorted)
+
+
 if __name__ == '__main__':
     app.config['JSON_AS_ASCII'] = False
     app.config['JSON_SORT_KEYS'] = False
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0', debug=True)

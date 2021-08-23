@@ -253,7 +253,7 @@ outputs:
   # - encrypted streams after the key exchange
   #
   - pcap-log:
-      enabled: yes #setting save_pcap
+      enabled: no #setting save_pcap
       filename: marioips.pcap
 
       # File size limit.  Can be specified in kb, mb, gb.  Just a number
