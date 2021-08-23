@@ -25,11 +25,11 @@ Mario 流量分析框架
 
 ## 展示
 
-![photos/mario_map.png](mario_map.png)  
-![photos/mario_ana.png](mario_ana.png)  
-![photos/mario_alert.png](mario_alert.png)  
-![photos/mario_alert_detil.png](mario_alert_detil.png)  
-![photos/mario_virtual.png](mario_virtual.png)  
+![./photos/mario_map.png](./photos/mario_map.png)  
+![./photos/mario_ana.png](./photos/mario_ana.png)  
+![./photos/mario_alert.png](./photos/mario_alert.png)  
+![./photos/mario_alert_detil.png](./photos/mario_alert_detil.png)  
+![./photos/mario_virtual.png](./photos/mario_virtual.png)  
 
 
 ## 服务端部署：
