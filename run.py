@@ -42,6 +42,7 @@ def clean_db():
     if request.method == 'POST':
         logger.warning("{} 请求清理数据库,等待服务端处理".format(request.remote_addr))
         clean_status['clean_db'] = "waiting process"
+        os.remove("./log.txt")
         return "start clean db"
 
 
