@@ -336,6 +336,7 @@ def show_wavy(begintime, endtime):
     wavy_result['wavy_date']['其他类型'] = [0]*len(days)
     wavy_result['time'] = days
     for eve_line in eve_lines:
+        eve_line = eve_line['_source']
         date = datetime.datetime.strptime(
             eve_line["timestamp"], "%Y-%m-%dT%H:%M:%S.%f%z").astimezone(datetime.timezone(datetime.timedelta(hours=8)))
         format_date = datetime.datetime.strftime(date, "%Y-%m-%d")

@@ -22,6 +22,7 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
     eve_lines = findeve("alert", begintime, endtime)
     if begintime != None and endtime != None:
         for eve_line in eve_lines:
+            eve_line = eve_line['_source']
             eve_info = {}
             eve_line = json_util.dumps(eve_line)
             eve_line = json.loads(eve_line)
@@ -125,6 +126,7 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                 pass
     else:
         for eve_line in eve_lines:
+            eve_line = eve_line['_source']
             eve_info = {}
             eve_line = json_util.dumps(eve_line)
             eve_line = json.loads(eve_line)
@@ -147,8 +149,8 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                     eve_info["time"] = eve_line["timestamp"]
                     eve_info["src"] = {}
                     eve_info["src"]["ip"] = src
-                    if ipAnalysis.is_internal_ip(src) or re.findall(r'^127\.', src):
-                        print("内网威胁{}".format(src))
+                    # if ipAnalysis.is_internal_ip(src) or re.findall(r'^127\.', src):
+                    #     print("内网威胁{}".format(src))
                     # else:
                     #     if "联防-自学习" not in alert_message:
                     #         # generate_by_ip(src)
@@ -201,9 +203,10 @@ def analyze_to_wavy(begintime=None, endtime=None):
         day = timedelta(days=1)
         for i in range(days):
             yield b_date + day*i
+    begintime = begintime.replace("T", "T00:00:00")    
     eve_lines = findeve("alert", begintime, endtime)
-    date_span = gen_dates(datetime.strptime(begintime, "%Y-%m-%dT%z"), (datetime.strptime(
-        endtime, "%Y-%m-%dT%H:%M:%S%z")-datetime.strptime(begintime, "%Y-%m-%dT%z")).days+1)
+    date_span = gen_dates(datetime.strptime(begintime, "%Y-%m-%dT%H:%M:%S%z"), (datetime.strptime(
+        endtime, "%Y-%m-%dT%H:%M:%S%z")-datetime.strptime(begintime, "%Y-%m-%dT%H:%M:%S%z")).days+1)
     days = []
     for date in date_span:
         days.append(datetime.strftime(date, "%Y-%m-%d"))

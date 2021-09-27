@@ -1,5 +1,6 @@
 from api.logger import logger
 from api.mongo import getstatus_db,mongo_connect,update_config
+from api.es import insert_es
 import datetime
 
 
@@ -9,6 +10,7 @@ import datetime
 
 def start():
     mongo_connect()
+    insert_es("alert")
     now_status = getstatus_db()
     if now_status == None:
         now_status = {}

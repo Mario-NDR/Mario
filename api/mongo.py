@@ -1,5 +1,5 @@
 import pymongo,sys
-
+from api.es import insert_es,search_es,get_all_index
 from pymongo.message import update
 from api.logger import logger
 import json
@@ -32,7 +32,6 @@ def mongo_connect():
         sys.exit()
 
 def evetomongo(client_ip,eve_file=None):
-    mongo_url = get_mongo()
     now_status = getstatus_db()
     try:
         timediff = int(time.time()) - now_status['last_clean']
@@ -46,8 +45,6 @@ def evetomongo(client_ip,eve_file=None):
         del_stats()
         clean_mongo()
         now_status['clean_db'] = "ready"
-    myclient = pymongo.MongoClient(mongo_url, connect=False)
-    mydb = myclient["mariodb"]
     num = 0
     if eve_file:
         eve_lines = eve_file
@@ -56,18 +53,11 @@ def evetomongo(client_ip,eve_file=None):
                 eve_line = json.loads(eve_line.decode('utf-8'))
             except:
                 eve_line = json.loads(eve_line)
-            mycol = mydb[eve_line["event_type"]]
-            mydict = eve_line
-            try:
-                mydict['client_ip'] = client_ip
-                # mydict['client_ip'] = config['client_ip']
-            except Exception as e:
-                pass
-            mycol.insert_one(mydict)
+            eve_line['client_ip'] = client_ip
+            insert_es(eve_line["event_type"],eve_line)
             num += 1
         now_status['total'] += num
         logger.info("新增数据{}条".format(num))
-        myclient.close()
         api.analyze.analyze_suricata_alert()
     update_config(now_status)
     return num
@@ -91,27 +81,17 @@ def update_config(newconfig,mod="update"):
         mycol.update_one({},{"$set":newconfig})
     
 
-def findeve(colname, begintime=None, endtime=None):
-    mongo_url = get_mongo()
-    myclient = pymongo.MongoClient(mongo_url, connect=False)
-    mydb = myclient["mariodb"]
-    mycol = mydb[colname]
+def findeve(index_name, begintime=None, endtime=None):
     if begintime and endtime:
-        infos = mycol.find({"timestamp": {"$gte": begintime, "$lt": endtime}})
-        myclient.close()
+        infos = search_es(index_name,begintime,endtime)
         return infos
     else:
-        infos = mycol.find()
-        myclient.close()
+        infos = search_es(index_name,limit=1000)
         return infos
 
 
 def show_db():
-    mongo_url = get_mongo()
     now_status = getstatus_db()
-    myclient = pymongo.MongoClient(mongo_url, connect=False)
-    mydb = myclient["mariodb"]
-    coll_names = mydb.list_collection_names(session=None)
     db_info = {}
     db_info['data'] = []
     db_info['sum'] = 0
@@ -121,15 +101,9 @@ def show_db():
     except:
         now_status['clean_db'] = "waiting process"
         db_info['last_clean'] = "Never run cleaning procedures"
-    for coll in coll_names:
-        if coll in ['alert', 'stats','mario_config']:
-            continue
-        db = mydb[coll]
-        info = {}
-        info['name'] = coll
-        info['count'] = db.find().count()
-        db_info['sum'] += info['count']
-        db_info['data'].append(info)
+    for coll in get_all_index():
+        db_info['sum'] += coll['count']
+        db_info['data'].append(coll)
     return json.dumps(db_info)
 
 

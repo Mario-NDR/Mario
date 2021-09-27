@@ -5,7 +5,5 @@ services:
         restart: always
         environment:
             - discovery.type=single-node
-        volumes:
-            - ./mariodb/elastic/:/usr/share/elasticsearch/data
         ports:
             - "9200:9200"

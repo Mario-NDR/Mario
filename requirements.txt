@@ -8,3 +8,4 @@ pymongo
 scapy
 uwsgi
 colorlog
+elasticsearch
