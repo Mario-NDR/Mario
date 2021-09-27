@@ -3,6 +3,7 @@ import re
 import tarfile
 import json
 import psutil
+from pymongo.message import update
 from api.logger import logger
 import time
 import datetime
@@ -10,7 +11,8 @@ import requests
 import api.analyze
 from api.ip import ipAnalysis
 import socket
-from lib.data import config, classtype, running_status
+from api.mongo import update_config,getstatus_db
+from lib.data import  classtype
 from flask import redirect, url_for
 
 
@@ -72,7 +74,8 @@ def get_allrules(server, query=" "):
 
 
 def set_clientrules(rules_info):
-    config['update_setting_time'] = int(time.time())
+    now_status = getstatus_db()
+    now_status['update_setting_time'] = int(time.time())
     with open('./ThirPath/marioips/rules/local.rules', 'r') as now_rules:
         rules = now_rules.readlines()
         rules_id = []
@@ -93,11 +96,13 @@ def set_clientrules(rules_info):
                     re.search(r'^(.*?) ', rule, re.S).group(0), info['type'] + " "))
     clientrules_file.close()
     originalrules_file.close()
+    update_config(now_status)
     return "yes"
 
 
 def del_rules(del_sid):
-    config['update_setting_time'] = int(time.time())
+    now_status = getstatus_db()
+    now_status['update_setting_time'] = int(time.time())
     reman_rules = []
     if del_sid == "all":
         with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
@@ -115,11 +120,13 @@ def del_rules(del_sid):
     with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
+    update_config(now_status)
     return del_result
 
 
 def change_rules(change_sid, chang_type):
-    config['update_setting_time'] = int(time.time())
+    now_status = getstatus_db()
+    now_status['update_setting_time'] = int(time.time())
     reman_rules = []
     del_result = "del false"
     with open('./ThirPath/marioips/rules/local.rules', 'r') as clientrules_file:
@@ -136,12 +143,12 @@ def change_rules(change_sid, chang_type):
     with open('./ThirPath/marioips/rules/local.rules', 'w') as f:
         for rules in reman_rules:
             f.write(rules)
+    update_config(now_status)
     return del_result
 
 
 def customization_install(src_ip):
     netcard_info = []
-    config['ip'] = ipAnalysis.get_local_ip()
     info = psutil.net_if_addrs()
     for k, v in info.items():
         for item in v:
@@ -160,7 +167,7 @@ def customization_install(src_ip):
         return file_read
     except:
         install_file = open(os.getcwd() + "/ThirPath/marioips/install.sh", "r")
-        file_read = install_file.read().replace("ipadd", config['ip'][0])
+        file_read = install_file.read().replace("ipadd", ipAnalysis.get_local_ip()[0])
         install_file.close()
         return file_read
 
@@ -256,7 +263,8 @@ def vul_search(ip):
 
 
 def get_status():
-    start_time = running_status['starttime']
+    now_status = getstatus_db()
+    start_time = now_status['starttime']
     now_time = datetime.datetime.now()
     time_diff = now_time-start_time
     timestatus = {}
@@ -288,6 +296,7 @@ def show_setting():
 
 
 def change_setting(settings):
+    now_status = getstatus_db()
     with open('./ThirPath/marioips/bin/senteve.sh', 'r') as script_senteve:
         old_base_settings = script_senteve.read()
         max_logfile_num = re.findall(
@@ -307,7 +316,8 @@ def change_setting(settings):
     # with open('./ThirPath/marioips/marioips.yaml','w') as marioips_yaml:
     #     marioips_yaml.write(new_mario_settings)
     logger.warning("配置文件修改 {}".format(settings))
-    config['update_setting_time'] = int(time.time())
+    now_status['update_setting_time'] = int(time.time())
+    update_config(now_status)
     return "修改成功"
 
 

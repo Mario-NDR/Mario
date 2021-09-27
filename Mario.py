@@ -3,7 +3,6 @@ import json
 import sys
 import api.analyze
 from api.ip import ipAnalysis
-from lib.data import config
 from core.webserver import webserver
 from run import app
 

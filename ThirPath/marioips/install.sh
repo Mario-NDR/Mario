@@ -12,7 +12,7 @@ if [ ! -n "$1" ] ;then
         echo -e "\033[32m -------------------------------------------------- \033[0m"
         echo -e "\033[32m |        Download the configuration file          | \033[0m"
         echo -e "\033[32m -------------------------------------------------- \033[0m"
-        wget http://ipadd:5000/marioips.tar.gz
+        wget https://ipadd:5000/marioips.tar.gz --no-check-certificate
         remoteadd="ipadd"
         if [ $? -eq 0 ]; then
             mkdir /opt/marioips
@@ -43,11 +43,11 @@ if [ ! -n "$1" ] ;then
     fi
 else
     if [ "$1" != "update" ];then
-        wget http://$1:5000/marioips.tar.gz
+        wget https://$1:5000/marioips.tar.gz --no-check-certificate
         remoteadd=$1
     else
         echo -e "\033[32m The main program to upgrade \033[0m" 
-        wget http://ipadd:5000/marioips.tar.gz
+        wget https://ipadd:5000/marioips.tar.gz --no-check-certificate
         remoteadd="ipadd"
         tar -zxPf marioips.tar.gz -C /opt/marioips/
         sed -i "s/remoteadd/$remoteadd/g" /opt/marioips/bin/senteve.sh

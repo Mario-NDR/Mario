@@ -23,7 +23,7 @@ while true;do
 		echo "skip rm pcap_log"
 	fi
 	echo `date '+%Y-%m-%d %H:%M:%S'` "backup eve.json to $newfile"
-	check_results=`curl -F "clientfile=@/opt/marioips/log/$newfile" -H "Accept: application/json" http://remoteadd:5000/api/evefile`
+	check_results=`curl -F "clientfile=@/opt/marioips/log/$newfile" -H "Accept: application/json" https://remoteadd:5000/api/evefile -k`
 	if [[ $check_results =~ "success" ]]
 	then
 		mv /opt/marioips/log/$newfile /opt/marioips/log/post_success/

@@ -1,0 +1,11 @@
+version: "3"
+services:
+    elastic:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.5.2
+        restart: always
+        environment:
+            - discovery.type=single-node
+        volumes:
+            - ./mariodb/elastic/:/usr/share/elasticsearch/data
+        ports:
+            - "9200:9200"

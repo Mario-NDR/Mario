@@ -4,7 +4,7 @@ then
 else
   for error_file in /opt/marioips/log/post_error/*
   do
-    check_results=`curl -F "clientfile=@$error_file" -H "Accept: application/json" http://remoteadd:5000/api/evefile`
+    check_results=`curl -F "clientfile=@$error_file" -H "Accept: application/json" https://remoteadd:5000/api/evefile -k`
     if [[ $check_results =~ "success" ]]
     then
       echo "repost $error_file success"

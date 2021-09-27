@@ -1,32 +1,52 @@
-import pymongo
+import pymongo,sys
+
+from pymongo.message import update
 from api.logger import logger
 import json
-from lib.data import config, running_status,src_ip
-from core.checkstart import start
 import api.analyze
 import time
-from datetime import datetime
-from lib.data import config, clean_status
+import configparser
+def connect(mongo_url):
+    count = 0
+    while True:
+        client = pymongo.MongoClient(mongo_url, serverSelectionTimeoutMS=3)
+        try:
+            client.admin.command("ping")
+        except:
+            count += 1
+        else:
+            break
+        if count == 3:
+            return False
+    return client
+def get_mongo():
+    config = configparser.ConfigParser()
+    config.read('config.cfg')
+    return "mongodb://{}:{}@{}:{}/".format(config['mongodb']['username'],config['mongodb']['password'],config['mongodb']['host'],config['mongodb']['port'])
+def mongo_connect():
+    monto_url = get_mongo()
+    if connect(monto_url) != False:
+        logger.info("数据库连接成功")
+    else:
+        logger.error("请检查数据库设置")
+        sys.exit()
 
-
-def evetomongo(eve_file=None):
+def evetomongo(client_ip,eve_file=None):
+    mongo_url = get_mongo()
+    now_status = getstatus_db()
     try:
-        config['mongo_url']
-    except:
-        start()
-    try:
-        timediff = int(time.time()) - clean_status['last_clean']
+        timediff = int(time.time()) - now_status['last_clean']
         if timediff > 3600:
-            clean_status['clean_db'] = "waiting process"
+            now_status['clean_db'] = "waiting process"
     except:
-        clean_status['last_clean'] = int(time.time())
-    if clean_status['clean_db'] == "waiting process":
+        now_status['last_clean'] = int(time.time())
+    if now_status['clean_db'] == "waiting process":
         logger.info("数据库清理程序触发")
-        clean_status['clean_db'] = "running"
+        now_status['clean_db'] = "running"
         del_stats()
         clean_mongo()
-        clean_status['clean_db'] = "ready"
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+        now_status['clean_db'] = "ready"
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
     mydb = myclient["mariodb"]
     num = 0
     if eve_file:
@@ -39,24 +59,41 @@ def evetomongo(eve_file=None):
             mycol = mydb[eve_line["event_type"]]
             mydict = eve_line
             try:
-                mydict['client_ip'] = config['client_ip']
+                mydict['client_ip'] = client_ip
+                # mydict['client_ip'] = config['client_ip']
             except Exception as e:
                 pass
             mycol.insert_one(mydict)
             num += 1
-        running_status['total'] += num
+        now_status['total'] += num
         logger.info("新增数据{}条".format(num))
         myclient.close()
         api.analyze.analyze_suricata_alert()
+    update_config(now_status)
     return num
 
+def getstatus_db():
+    mongo_url = get_mongo()
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
+    mydb = myclient["mariodb"]
+    mycol = mydb['mario_config']
+    col_result = mycol.find_one({})
+    return col_result
+
+def update_config(newconfig,mod="update"):
+    mongo_url = get_mongo()
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
+    mydb = myclient["mariodb"]
+    mycol = mydb['mario_config']
+    if mod == "new":
+        mycol.insert_one(newconfig)
+    else:
+        mycol.update_one({},{"$set":newconfig})
+    
 
 def findeve(colname, begintime=None, endtime=None):
-    try:
-        config['mongo_url']
-    except:
-        start()
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+    mongo_url = get_mongo()
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
     mydb = myclient["mariodb"]
     mycol = mydb[colname]
     if begintime and endtime:
@@ -70,24 +107,22 @@ def findeve(colname, begintime=None, endtime=None):
 
 
 def show_db():
-    try:
-        config['mongo_url']
-    except:
-        start()
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+    mongo_url = get_mongo()
+    now_status = getstatus_db()
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
     mydb = myclient["mariodb"]
     coll_names = mydb.list_collection_names(session=None)
     db_info = {}
     db_info['data'] = []
     db_info['sum'] = 0
-    db_info['total'] = running_status['total']
+    db_info['total'] = now_status['total']
     try:
-        db_info['last_clean'] = clean_status['last_clean']
+        db_info['last_clean'] = now_status['last_clean']
     except:
-        clean_status['clean_db'] = "waiting process"
+        now_status['clean_db'] = "waiting process"
         db_info['last_clean'] = "Never run cleaning procedures"
     for coll in coll_names:
-        if coll in ['alert', 'stats']:
+        if coll in ['alert', 'stats','mario_config']:
             continue
         db = mydb[coll]
         info = {}
@@ -99,7 +134,7 @@ def show_db():
 
 
 def del_stats():
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+    myclient = pymongo.MongoClient(get_mongo(), connect=False)
     mydb = myclient["mariodb"]
     for colname in ["stats","flow"]:
         mycol = mydb[colname]
@@ -109,9 +144,10 @@ def del_stats():
 
 
 def clean_mongo():
-    clean_status['last_clean'] = int(time.time())
+    now_status = getstatus_db()
+    now_status['last_clean'] = int(time.time())
     src_iplist = []
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+    myclient = pymongo.MongoClient(get_mongo(), connect=False)
     mydb = myclient["mariodb"]
     alert_info = mydb['alert']
     coll_names = mydb.list_collection_names(session=None)
@@ -149,11 +185,8 @@ def clean_mongo():
 
 
 def show_ioc():
-    try:
-        config['mongo_url']
-    except:
-        start()
-    myclient = pymongo.MongoClient(config['mongo_url'], connect=False)
+    mongo_url = get_mongo()
+    myclient = pymongo.MongoClient(mongo_url, connect=False)
     try:
         mydb = myclient["azkaban"]
     except:

@@ -1,10 +1,10 @@
 from scapy.all import *
-from lib.data import config, src_ip, dest_ip
+from lib.data import src_ip, dest_ip
 from api.ip import ipAnalysis
 from api.mongo import findeve, evetomongo
 from bson import json_util
 from api.logger import logger
-from datetime import timedelta
+from datetime import timedelta,datetime
 from api.autorules import generate_by_ip
 import re
 import time
@@ -46,10 +46,10 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                         if ipAnalysis.is_internal_ip(eve_line['client_ip']) or re.findall(r'^127\.', eve_line['client_ip']):
                             try:
                                 eve_info["src"] = ipAnalysis.get_city(
-                                    config['ip'][0], language, location=True)
+                                    ipAnalysis.get_local_ip()[0], language, location=True)
                             except:
                                 eve_info["src"] = ipAnalysis.get_city(
-                                    config['ip'][0], language='en', location=True)
+                                    ipAnalysis.get_local_ip()[0], language='en', location=True)
                         else:
                             try:
                                 eve_info["src"] = ipAnalysis.get_city(
@@ -72,10 +72,10 @@ def analyze_suricata_alert(data="xy", language="en", begintime=None, endtime=Non
                         if ipAnalysis.is_internal_ip(eve_line['client_ip']) or re.findall(r'^127\.', eve_line['client_ip']):
                             try:
                                 eve_info["dest"] = ipAnalysis.get_city(
-                                    config['ip'][0], language, location=True)
+                                    ipAnalysis.get_local_ip()[0], language, location=True)
                             except:
                                 eve_info["dest"] = ipAnalysis.get_city(
-                                    config['ip'][0], language='en', location=True)
+                                    ipAnalysis.get_local_ip()[0], language='en', location=True)
                         else:
                             try:
                                 eve_info["dest"] = ipAnalysis.get_city(

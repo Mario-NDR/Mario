@@ -3,12 +3,12 @@ import api.web
 import api.autorules
 from api.mongo import evetomongo
 from core.checkstart import start
-from lib.data import config, clean_status, src_ip, dest_ip
-from api.mongo import clean_mongo, show_db, show_ioc
+from lib.data import  src_ip, dest_ip
+from api.mongo import  show_db, show_ioc,getstatus_db,update_config
 from api.logger import logger
 import os
 import json
-from flask import Flask, request, redirect, url_for, jsonify, send_from_directory, make_response, Response
+from flask import Flask, request, jsonify, send_from_directory, make_response, Response
 
 
 app = Flask(__name__)
@@ -16,6 +16,7 @@ app = Flask(__name__)
 
 @app.route('/api/map', methods=['GET'])
 def map():
+    start()
     begintime = request.args.get("begintime")
     endtime = request.args.get("endtime")
     result = api.web.map(begintime=begintime, endtime=endtime)
@@ -26,10 +27,10 @@ def map():
 @app.route('/api/evefile', methods=['GET', 'POST'])
 def upload_evefile():
     if request.method == 'POST':
-        config['client_ip'] = request.remote_addr
+        client_ip = request.remote_addr
         filename = request.files['clientfile'].filename
         file = request.files['clientfile'].readlines()
-        evetomongo(eve_file=file)
+        evetomongo(client_ip,eve_file=file)
         logger.info("{} 提交了日志 {}".format(request.remote_addr, filename))
         return "upload eve.json success"
 
@@ -40,8 +41,10 @@ def clean_db():
         result = show_db()
         return result
     if request.method == 'POST':
+        now_status = getstatus_db()
         logger.warning("{} 请求清理数据库,等待服务端处理".format(request.remote_addr))
-        clean_status['clean_db'] = "waiting process"
+        now_status['clean_db'] = "waiting process"
+        update_config(now_status)
         os.remove("./log.txt")
         return "start clean db"
 
@@ -54,7 +57,8 @@ def get_status():
 
 @app.route('/api/cleanstatus', methods=['GET'])
 def get_clean_status():
-    return clean_status['clean_db']
+    now_status = getstatus_db()
+    return now_status['clean_db']
 
 
 @app.route('/api/rules', methods=['GET', 'POST'])
@@ -161,13 +165,15 @@ def setting():
 
 @app.route('/api/update', methods=['GET'])
 def checkupdate():
+    now_status = getstatus_db()
     operation = request.args.get('operation')
     if operation == "check":
         try:
-            config['update_setting_time']
+            now_status['update_setting_time']
         except:
-            config['update_setting_time'] = 'no update'
-        return str(config['update_setting_time'])
+            now_status['update_setting_time'] = 'no update'
+        print(now_status)
+        return str(now_status['update_setting_time'])
 
 
 @app.route('/api/wavy', methods=['GET'])
@@ -205,6 +211,7 @@ def count_destip():
 
 
 if __name__ == '__main__':
+    start()
     app.config['JSON_AS_ASCII'] = False
     app.config['JSON_SORT_KEYS'] = False
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='172.16.0.1',port=5000, debug=True)

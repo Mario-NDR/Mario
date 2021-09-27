@@ -1,6 +1,5 @@
 
 import traceback
-from lib.data import config
 import geoip2.database
 import requests
 from api.logger import logger
@@ -14,12 +13,8 @@ class ipAnalysis(object):
             response_data = GeoipDatabase.city(ip)
         except geoip2.errors.AddressNotFoundError:
             original_ip = ip
-            try:
-                response_data = GeoipDatabase.city(config['client_ip'])
-                logger.warning("远程客户端内网遭受攻击")
-            except:
-                response_data = GeoipDatabase.city(config['ip'][0])
-                logger.warning("本地客户端内网遭到攻击")
+            response_data = GeoipDatabase.city(ipAnalysis.get_local_ip()[0])
+            logger.warning("本地客户端内网遭到攻击")
         if location:
             try:
                 ip_info = {}
