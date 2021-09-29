@@ -138,7 +138,7 @@ def clean_mongo():
             db.delete_many({"fileinfo.filename": {"$regex": "/api/"}})
             del_count += db.find({"fileinfo.filename": {"$regex": "local.rules"}}).count()
             db.delete_many({"fileinfo.filename": {"$regex": "local.rules"}})
-        if coll in ['alert','flow','stats']:
+        if coll in ['alert','flow','stats','mario_config']:
             continue
         logger.info("清理数据库 {}".format(coll))
         for item in list(db.find().batch_size(500)[:]):
