@@ -203,8 +203,8 @@ def analyze_to_wavy(begintime=None, endtime=None):
         day = timedelta(days=1)
         for i in range(days):
             yield b_date + day*i
-    begintime = begintime.replace("T", "T00:00:00")    
-    endtime = endtime.replace("00:","24:")
+    begintime = begintime.replace("T", "T00:00:00").replace("+0800","Z")
+    endtime = endtime.replace("00:","24:").replace("+0800","Z")
     eve_lines = findeve("alert", begintime, endtime)
     date_span = gen_dates(datetime.strptime(begintime, "%Y-%m-%dT%H:%M:%S%z"), (datetime.strptime(
         endtime, "%Y-%m-%dT%H:%M:%S%z")-datetime.strptime(begintime, "%Y-%m-%dT%H:%M:%S%z")).days+1)
