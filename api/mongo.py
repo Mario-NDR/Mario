@@ -45,6 +45,7 @@ def evetomongo(client_ip,eve_file=None):
         now_status['last_clean'] = int(time.time())
     if now_status['clean_db'] == "waiting process":
         logger.info("数据库清理程序触发")
+        now_status['last_clean'] = int(time.time())
         now_status['clean_db'] = "running"
         del_stats()
         clean_mongo()
