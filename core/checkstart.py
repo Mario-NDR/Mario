@@ -10,7 +10,7 @@ import datetime
 
 def start():
     mongo_connect()
-    insert_es("alert")
+    insert_es()
     now_status = getstatus_db()
     if now_status == None:
         now_status = {}

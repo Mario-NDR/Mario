@@ -1,7 +1,7 @@
-from elasticsearch import Elasticsearch
+from elasticsearch import Elasticsearch,helpers
 import configparser
 
-def insert_es(index_name,value=None):
+def insert_es(value=None):
     config = configparser.ConfigParser()
     config.read('config.cfg')
     if config['elastic']['pass'] and config['elastic']['user']:
@@ -9,9 +9,11 @@ def insert_es(index_name,value=None):
     else:
         es = Elasticsearch(["{}:{}".format(config['elastic']['host'],config['elastic']['port'])])
     if value == None:
-        es.indices.create(index_name, ignore=400)
+        es.indices.create("alert", ignore=400)
     else:
-        es.index(index_name,body=value)
+        for datakey in value.keys():
+            helpers.bulk(es,index=datakey,actions=value[datakey])
+    #     es.index(index_name,body=value)
 def search_es(index_name,begintime=None,endtime=None,limit=10000):
     config = configparser.ConfigParser()
     config.read('config.cfg')

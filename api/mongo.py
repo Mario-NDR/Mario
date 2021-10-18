@@ -32,11 +32,15 @@ def mongo_connect():
         sys.exit()
 
 def evetomongo(client_ip,eve_file=None):
+    insert_data = {}
     now_status = getstatus_db()
     try:
         timediff = int(time.time()) - now_status['last_clean']
+        print(int(time.time()),now_status['last_clean'])
+        print(timediff)
         if timediff > 3600:
             now_status['clean_db'] = "waiting process"
+            print("auto")
     except:
         now_status['last_clean'] = int(time.time())
     if now_status['clean_db'] == "waiting process":
@@ -54,9 +58,13 @@ def evetomongo(client_ip,eve_file=None):
             except:
                 eve_line = json.loads(eve_line)
             eve_line['client_ip'] = client_ip
-            insert_es(eve_line["event_type"],eve_line)
+            if eve_line["event_type"] not in insert_data.keys():
+                insert_data[eve_line["event_type"]] = []
+            insert_data[eve_line["event_type"]].append(eve_line)
+            # insert_es(eve_line["event_type"],eve_line)
             num += 1
         now_status['total'] += num
+        insert_es(insert_data)
         logger.info("新增数据{}条".format(num))
         api.analyze.analyze_suricata_alert()
     update_config(now_status)
