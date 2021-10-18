@@ -47,7 +47,8 @@ def search_es(index_name,begintime=None,endtime=None,limit=10000):
                 "should": [],
                 
             }
-        }
+        },
+        "sort": {"timestamp": {"order": "asc"}}
     }
     es_search_result = es.search(
                 index=index_name, body=es_search_body, size=limit)

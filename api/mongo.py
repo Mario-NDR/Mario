@@ -36,8 +36,6 @@ def evetomongo(client_ip,eve_file=None):
     now_status = getstatus_db()
     try:
         timediff = int(time.time()) - now_status['last_clean']
-        print(int(time.time()),now_status['last_clean'])
-        print(timediff)
         if timediff > 3600:
             now_status['clean_db'] = "waiting process"
             print("auto")
@@ -95,7 +93,7 @@ def findeve(index_name, begintime=None, endtime=None):
         infos = search_es(index_name,begintime,endtime)
         return infos
     else:
-        infos = search_es(index_name,limit=1000)
+        infos = search_es(index_name,limit=10000)
         return infos
 
 
@@ -119,9 +117,9 @@ def show_db():
 def del_stats():
     myclient = pymongo.MongoClient(get_mongo(), connect=False)
     mydb = myclient["mariodb"]
-    for colname in ["stats","flow"]:
-        mycol = mydb[colname]
-        mycol.delete_many({})
+    # for colname in ["stats","flow"]:
+    #     mycol = mydb[colname]
+    #     mycol.delete_many({})
     logger.info("流量日志状态更新")
     myclient.close()
 

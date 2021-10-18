@@ -343,29 +343,22 @@ def show_wavy(begintime, endtime):
         date_list_index = days.index(format_date)
         if eve_line["alert"]["category"] == "Executable code was detected":
             wavy_result['wavy_date']['恶意代码'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "Attempted Denial of Service":
+        elif eve_line["alert"]["category"] == "Attempted Denial of Service":
             wavy_result['wavy_date']['DOS攻击'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "Web Application Attack":
+        elif eve_line["alert"]["category"] == "Web Application Attack":
             wavy_result['wavy_date']['WEB攻击'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "A suspicious filename was detected":
+        elif eve_line["alert"]["category"] == "A suspicious filename was detected":
             wavy_result['wavy_date']['可疑文件名'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "A Network Trojan was detected":
+        elif eve_line["alert"]["category"] == "A Network Trojan was detected":
             wavy_result['wavy_date']['木马活动'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "Detection of a Network Scan":
+        elif eve_line["alert"]["category"] == "Detection of a Network Scan":
             wavy_result['wavy_date']['网络扫描'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "A system call was detected":
+        elif eve_line["alert"]["category"] == "A system call was detected":
             wavy_result['wavy_date']['威胁情报'][date_list_index] += 1
-            continue
-        if eve_line["alert"]["category"] == "Attempted User Privilege Gain" or eve_line["alert"]["category"] == "Attempted Administrator Privilege Gain":
+        elif eve_line["alert"]["category"] == "Attempted User Privilege Gain" or eve_line["alert"]["category"] == "Attempted Administrator Privilege Gain":
             wavy_result['wavy_date']['权限尝试'][date_list_index] += 1
-            continue
-        wavy_result['wavy_date']['其他类型'][date_list_index] += 1
+        else:
+            wavy_result['wavy_date']['其他类型'][date_list_index] += 1
     for date in list(wavy_result['wavy_date'].keys()):
         if all(_ == 0 for _ in wavy_result['wavy_date'][date]):
             del wavy_result['wavy_date'][date]
