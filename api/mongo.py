@@ -1,7 +1,9 @@
 import pymongo,sys
+import re
 from api.es import insert_es,search_es,get_all_index
 from pymongo.message import update
 from api.logger import logger
+import urllib
 import json
 import api.analyze
 import time
@@ -56,6 +58,9 @@ def evetomongo(client_ip,eve_file=None):
                 eve_line = json.loads(eve_line.decode('utf-8'))
             except:
                 eve_line = json.loads(eve_line)
+            if eve_line["event_type"] == "alert" and "app_proto" in eve_line.keys()and any(_ in eve_line["payload_printable"] for _ in ["wget","curl"]):
+                downloadfile_url = re.findall(r'(wget|curl).+(http[s]{0,1}://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(\:\d{1,5}){0,1}[a-zA-z0-9\/\.\/\_]+)',urllib.parse.unquote(eve_line["payload_printable"]))
+                logger.info("检测到样本传播 {}".format(downloadfile_url[0][1]))
             eve_line['client_ip'] = client_ip
             if eve_line["event_type"] not in insert_data.keys():
                 insert_data[eve_line["event_type"]] = []
